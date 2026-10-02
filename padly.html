@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M. Padly Maulana - Edukasi Tajwid Al-Qur'an Lengkap</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Amiri & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .font-arabic {
+            font-family: 'Amiri', serif;
+            line-height: 2.3;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 4px;
+        }
+
+        /* Tajwid Color Highlights */
+        .tj-izhar { color: #d97706; background-color: #fef3c7; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-idgham { color: #059669; background-color: #d1fae5; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-ikhfa { color: #e11d48; background-color: #ffe4e6; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-iqlab { color: #4f46e5; background-color: #e0e7ff; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-qalqalah { color: #0284c7; background-color: #e0f2fe; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-mad { color: #9333ea; background-color: #f3e8ff; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+        .tj-ghunnah { color: #c05621; background-color: #feebc8; border-radius: 0.25rem; padding: 0 0.25rem; font-weight: 700; }
+
+        .dark .tj-izhar { color: #fbbf24; background-color: rgba(217, 119, 6, 0.25); }
+        .dark .tj-idgham { color: #34d399; background-color: rgba(5, 150, 105, 0.25); }
+        .dark .tj-ikhfa { color: #fb7185; background-color: rgba(225, 29, 72, 0.25); }
+        .dark .tj-iqlab { color: #818cf8; background-color: rgba(79, 70, 229, 0.25); }
+        .dark .tj-qalqalah { color: #38bdf8; background-color: rgba(2, 132, 199, 0.25); }
+        .dark .tj-mad { color: #c084fc; background-color: rgba(147, 51, 234, 0.25); }
+        .dark .tj-ghunnah { color: #fbd38d; background-color: rgba(192, 86, 33, 0.25); }
+
+        /* Pulse Metronome Beat Animation */
+        @keyframes beatPulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        .animate-beat {
+            animation: beatPulse 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & Name -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+                        <i class="fa-solid fa-book-quran text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg sm:text-xl font-black bg-gradient-to-r from-emerald-700 via-emerald-600 to-amber-600 dark:from-emerald-400 dark:to-amber-300 bg-clip-text text-transparent">M. Padly Maulana</span>
+                        <span class="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Edukasi Tajwid Al-Qur'an</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                    <a href="#materi" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Materi & Harakat</a>
+                    <a href="#metronomeWidget" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Penghitung Ketukan</a>
+                    <a href="#kuis" class="text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Kuis Tajwid</a>
+                    <button onclick="toggleBookmarksModal()" class="flex items-center space-x-1.5 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-colors">
+                        <i class="fa-solid fa-bookmark text-amber-500"></i>
+                        <span>Tersimpan</span>
+                        <span id="bookmarkCount" class="bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+                    </button>
+                </nav>
+
+                <!-- Action Controls -->
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggle" onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Ubah Tema">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:inline text-lg text-amber-400"></i>
+                    </button>
+                    <a href="#kuis" class="hidden sm:inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-xl shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02] active:scale-95 text-xs sm:text-sm">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Uji Harakat</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-emerald-900 to-slate-900 text-white py-16 sm:py-20">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-500/40 text-amber-300 text-xs sm:text-sm font-semibold mb-6 backdrop-blur-sm shadow-inner">
+                <i class="fa-solid fa-circle-check text-amber-400"></i>
+                <span>Platform Resmi Pembelajaran Tajwid & Ketukan Harakat</span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight mb-4 max-w-4xl mx-auto">
+                <span class="text-white">M. Padly Maulana</span> <br class="hidden sm:inline">
+                <span class="bg-gradient-to-r from-amber-300 via-amber-400 to-emerald-300 bg-clip-text text-transparent">Edukasi Tajwid & Harakat Al-Qur'an</span>
+            </h1>
+            
+            <p class="font-arabic text-2xl sm:text-3xl text-emerald-200 mb-6">
+                وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا
+            </p>
+            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+                Pelajari kaidah hukum tajwid Al-Qur'an secara cermat. Dilengkapi penjelasan durasi **panjang bacaan (1, 2, 4, 5, hingga 6 ketukan harakat)**, audio pengucapan, dan simulasi ketukan interaktif.
+            </p>
+
+            <!-- Realtime Search Input -->
+            <div class="max-w-2xl mx-auto relative">
+                <div class="relative flex items-center">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 text-slate-400 text-lg"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari tajwid, huruf (ن, م, ب), atau ketukan (contoh: '2 harakat', '6 ketukan', 'mad')..." 
+                        class="w-full pl-12 pr-12 py-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 shadow-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/40 text-sm sm:text-base transition-all">
+                    <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mt-10 pt-8 border-t border-emerald-800/60 text-center">
+                <div>
+                    <span class="block text-2xl sm:text-3xl font-extrabold text-amber-400">19+</span>
+                    <span class="text-xs text-slate-300">Hukum Tajwid Lengkap</span>
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-3xl font-extrabold text-amber-400">1 - 6</span>
+                    <span class="text-xs text-slate-300">Skala Ketukan Harakat</span>
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-3xl font-extrabold text-amber-400">Interactive</span>
+                    <span class="text-xs text-slate-300">Metronom & Audio</span>
+                </div>
+                <div>
+                    <span class="block text-2xl sm:text-3xl font-extrabold text-amber-400">M. Padly M.</span>
+                    <span class="text-xs text-slate-300">Kurikulum Sesuai Hafs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metronome & Harakat Beat Counter Widget -->
+    <section id="metronomeWidget" class="bg-gradient-to-r from-emerald-900 to-slate-900 text-white py-10 border-b border-emerald-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-800/80 rounded-3xl p-6 sm:p-8 border border-emerald-500/30 backdrop-blur-md shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+                
+                <div class="lg:w-1/2">
+                    <div class="inline-flex items-center space-x-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-stopwatch text-base"></i>
+                        <span>Simulasi Audio & Visual Ketukan</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold mb-2">Penghitung Ketukan Harakat Interaktif</h3>
+                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                        Gunakan alat ini untuk mendengarkan dan merasakan ritme ketukan harakat tajwid secara real-time. Pilih jumlah ketukan harakat (1, 2, 4, 5, atau 6 ketukan) lalu tekan tombol putar.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button onclick="setMetronomeCount(1)" id="metro-1" class="metro-btn bg-slate-700 hover:bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">1 Ketukan</button>
+                        <button onclick="setMetronomeCount(2)" id="metro-2" class="metro-btn bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ring-2 ring-emerald-400">2 Ketukan</button>
+                        <button onclick="setMetronomeCount(3)" id="metro-3" class="metro-btn bg-slate-700 hover:bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">2-3 Ketukan</button>
+                        <button onclick="setMetronomeCount(4)" id="metro-4" class="metro-btn bg-slate-700 hover:bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">4 Ketukan</button>
+                        <button onclick="setMetronomeCount(5)" id="metro-5" class="metro-btn bg-slate-700 hover:bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">5 Ketukan</button>
+                        <button onclick="setMetronomeCount(6)" id="metro-6" class="metro-btn bg-slate-700 hover:bg-emerald-600 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all">6 Ketukan</button>
+                    </div>
+                </div>
+
+                <!-- Interactive Metronome Visualizer Block -->
+                <div class="lg:w-1/2 w-full bg-slate-900/90 rounded-2xl p-6 border border-slate-700 text-center flex flex-col items-center justify-center">
+                    <!-- Visual Beats Dots -->
+                    <div id="beatDotsContainer" class="flex items-center justify-center space-x-3 mb-6">
+                        <!-- Dots rendered dynamically -->
+                    </div>
+
+                    <div class="text-xs text-amber-300 font-bold mb-4" id="metronomeStatusText">
+                        Target: 2 Harakat / Ketukan (Mad Thabi'i, Dengung Ghunnah, dll.)
+                    </div>
+
+                    <button id="playMetronomeBtn" onclick="toggleMetronome()" class="px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black rounded-2xl shadow-lg transition-all flex items-center space-x-2 text-sm">
+                        <i class="fa-solid fa-play" id="metroPlayIcon"></i>
+                        <span id="metroPlayText">Bunyikan Ketukan</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content & Filters Section -->
+    <main id="materi" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        
+        <!-- Category & Harakat Filter Controls -->
+        <div class="mb-8 space-y-6">
+            
+            <!-- Category Filter Tabs -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-emerald-600"></i>
+                        <span>Filter Berdasarkan Hukum Tajwid</span>
+                    </h2>
+                </div>
+
+                <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                    <button onclick="filterCategory('all')" id="btn-cat-all" class="cat-btn active bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all shadow-md">
+                        Semua Hukum
+                    </button>
+                    <button onclick="filterCategory('nun_sukun')" id="btn-cat-nun_sukun" class="cat-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                        Nun Sukun & Tanwin
+                    </button>
+                    <button onclick="filterCategory('mim_sukun')" id="btn-cat-mim_sukun" class="cat-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                        Mim Sukun & Ghunnah
+                    </button>
+                    <button onclick="filterCategory('qalqalah')" id="btn-cat-qalqalah" class="cat-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                        Hukum Qalqalah
+                    </button>
+                    <button onclick="filterCategory('alif_lam')" id="btn-cat-alif_lam" class="cat-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                        Hukum Alif Lam (ال)
+                    </button>
+                    <button onclick="filterCategory('mad')" id="btn-cat-mad" class="cat-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all">
+                        Hukum Mad (Asli & Far'i)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Harakat / Ketukan Filter Buttons -->
+            <div class="bg-amber-500/10 dark:bg-amber-950/30 p-4 rounded-2xl border border-amber-500/30">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xs sm:text-sm font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Filter Berdasarkan Panjang Harakat / Ketukan:</span>
+                    </h3>
+                    <span id="resultCount" class="text-xs text-slate-500 dark:text-slate-400 font-bold">Menampilkan Semua</span>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                    <button onclick="filterHarakat('all')" id="btn-hk-all" class="hk-btn active bg-amber-600 text-white px-3 py-1.5 rounded-lg transition-all shadow-sm">Semua Harakat</button>
+                    <button onclick="filterHarakat('1_harakat')" id="btn-hk-1_harakat" class="hk-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 px-3 py-1.5 rounded-lg transition-all">1 Harakat (Jelas/Tanpa Dengung)</button>
+                    <button onclick="filterHarakat('2_harakat')" id="btn-hk-2_harakat" class="hk-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 px-3 py-1.5 rounded-lg transition-all">2 Harakat (Dengung / Mad Asli)</button>
+                    <button onclick="filterHarakat('4_5_harakat')" id="btn-hk-4_5_harakat" class="hk-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 px-3 py-1.5 rounded-lg transition-all">4 - 5 Harakat (Mad Jaiz / Wajib)</button>
+                    <button onclick="filterHarakat('6_harakat')" id="btn-hk-6_harakat" class="hk-btn bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 px-3 py-1.5 rounded-lg transition-all">6 Harakat (Mad Lazim / Waqaf)</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tajwid Cards Grid Container -->
+        <div id="tajwidContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic cards rendered via JS -->
+        </div>
+
+        <!-- Empty Search Result -->
+        <div id="emptyResult" class="hidden text-center py-16 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700">
+            <div class="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-magnifying-glass font-bold"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Materi Tidak Ditemukan</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">Maaf, kata kunci atau filter pencarian Anda tidak cocok dengan materi tajwid maupun harakat.</p>
+            <button onclick="resetFilters()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-md hover:bg-emerald-700 transition-all">
+                Reset Semua Filter
+            </button>
+        </div>
+
+        <!-- Kuis Interaktif Tajwid & Harakat Section -->
+        <section id="kuis" class="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800">
+            <div class="bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-2.5 bg-amber-500/20 text-amber-400 rounded-2xl border border-amber-500/30">
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                        </span>
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-black">Kuis Tajwid & Harakat Interaktif</h2>
+                            <p class="text-slate-300 text-xs sm:text-sm">Uji pemahaman Anda tentang Hukum Tajwid dan Ketukan Harakat - Curated by M. Padly Maulana</p>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Start Screen -->
+                    <div id="quizStartScreen" class="text-center py-8 bg-slate-800/60 rounded-2xl border border-emerald-500/20 p-6 backdrop-blur-sm">
+                        <i class="fa-solid fa-circle-question text-5xl text-amber-400 mb-4 animate-bounce"></i>
+                        <h3 class="text-xl font-bold mb-2">Siap Menguji Kemampuan Tajwid & Harakat Anda?</h3>
+                        <p class="text-slate-300 text-sm max-w-lg mx-auto mb-6">Kuis terdiri dari 10 soal pilihan ganda seputar Hukum Nun/Mim Sukun, Qalqalah, Mad, serta Jumlah Ketukan Harakat.</p>
+                        <button onclick="startQuiz()" class="px-8 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold rounded-2xl shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all text-base">
+                            <i class="fa-solid fa-play mr-2"></i> Mulai Kuis Sekarang
+                        </button>
+                    </div>
+
+                    <!-- Active Quiz Screen -->
+                    <div id="quizActiveScreen" class="hidden">
+                        <div class="flex items-center justify-between text-xs sm:text-sm mb-4 font-semibold text-emerald-300">
+                            <span id="quizProgressText">Pertanyaan 1 dari 10</span>
+                            <span id="quizScoreText">Skor: 0</span>
+                        </div>
+
+                        <div class="w-full h-2.5 bg-slate-800 rounded-full mb-6 overflow-hidden">
+                            <div id="quizProgressBar" class="h-full bg-gradient-to-r from-emerald-400 to-amber-400 transition-all duration-300" style="width: 10%"></div>
+                        </div>
+
+                        <div class="bg-slate-800/90 rounded-2xl p-6 border border-emerald-500/30 mb-6">
+                            <h4 id="quizQuestion" class="text-lg sm:text-xl font-bold mb-4 leading-relaxed"></h4>
+                            
+                            <div id="quizArabicPreview" class="hidden my-4 p-4 bg-slate-900/80 rounded-xl text-center border border-slate-700">
+                                <span id="quizArabicText" class="font-arabic text-3xl text-amber-300"></span>
+                            </div>
+
+                            <div id="quizOptions" class="grid grid-cols-1 gap-3">
+                                <!-- Dynamic Options -->
+                            </div>
+                        </div>
+
+                        <div id="quizFeedback" class="hidden p-4 rounded-xl mb-6 border text-sm font-medium transition-all"></div>
+
+                        <div class="flex justify-end">
+                            <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-md">
+                                Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result Screen -->
+                    <div id="quizResultScreen" class="hidden text-center py-8">
+                        <div id="quizResultIcon" class="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 shadow-xl"></div>
+                        <h3 id="quizResultTitle" class="text-2xl font-black mb-2"></h3>
+                        <p id="quizResultSubtitle" class="text-slate-300 text-sm max-w-md mx-auto mb-6"></p>
+
+                        <div class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 inline-block mb-8 min-w-[240px]">
+                            <span class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Skor Akhir Anda</span>
+                            <span id="finalScore" class="text-4xl font-extrabold text-amber-400">0 / 100</span>
+                        </div>
+
+                        <div>
+                            <button onclick="startQuiz()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Coba Kuis Lagi
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Detailed Analysis Modal -->
+    <div id="analysisModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-700 transform scale-95 transition-transform duration-300 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 w-9 h-9 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="p-2 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-xl">
+                    <i class="fa-solid fa-microscope text-xl"></i>
+                </span>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Analisis Tajwid & Harakat Mendalam</h3>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 text-center border border-slate-200 dark:border-slate-700/60 mb-6">
+                <div id="modalArabic" class="font-arabic text-4xl sm:text-5xl text-emerald-700 dark:text-emerald-400 mb-3 leading-relaxed"></div>
+                <div id="modalTransliteration" class="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-1"></div>
+                <div id="modalTranslation" class="text-xs text-slate-500 dark:text-slate-400 italic"></div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700/50 rounded-xl">
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Hukum Tajwid</h4>
+                        <span id="modalRuleBadge" class="inline-block px-3 py-1 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300"></span>
+                    </div>
+                    <div class="p-3 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">Panjang Bacaan / Ketukan</h4>
+                        <span id="modalHarakatBadge" class="font-bold text-xs text-amber-700 dark:text-amber-300"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Sebab & Analisis Hukum</h4>
+                    <p id="modalReason" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Panduan Pengucapan Sesuai Harakat</h4>
+                    <p id="modalHowToRead" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-amber-50 dark:bg-amber-950/30 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/50"></p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-sm transition-colors">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmarks Drawer Modal -->
+    <div id="bookmarksModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[80vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700 mb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bookmark text-amber-500 text-lg"></i>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Materi Tersimpan</h3>
+                </div>
+                <button onclick="toggleBookmarksModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div id="bookmarksList" class="flex-grow overflow-y-auto space-y-3 pr-1">
+                <!-- Dynamic bookmarks list -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center justify-center sm:justify-start space-x-2 mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-book-quran"></i>
+                        </div>
+                        <span class="text-lg font-black text-white">M. Padly Maulana</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Platform edukasi Tajwid & Harakat Al-Qur'an interaktif karya M. Padly Maulana. Dilengkapi durasi ketukan harakat, visual audio, dan simulasi ritme.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-3">Hukum & Harakat</h4>
+                    <ul class="text-xs space-y-2">
+                        <li><a href="#materi" onclick="filterHarakat('1_harakat')" class="hover:text-emerald-400 transition-colors">1 Harakat (Izhar / Jelas)</a></li>
+                        <li><a href="#materi" onclick="filterHarakat('2_harakat')" class="hover:text-emerald-400 transition-colors">2 Harakat (Mad Thabi'i & Dengung)</a></li>
+                        <li><a href="#materi" onclick="filterHarakat('4_5_harakat')" class="hover:text-emerald-400 transition-colors">4 - 5 Harakat (Mad Jaiz / Wajib)</a></li>
+                        <li><a href="#materi" onclick="filterHarakat('6_harakat')" class="hover:text-emerald-400 transition-colors">6 Harakat (Mad Lazim & Waqaf)</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-3">Pesan Edukasi</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                        Semoga website ini menjadi ilmu bermanfaat. Tetap imbangi dengan talaqqi langsung di bawah bimbingan Ustadz / Guru Al-Qur'an.
+                    </p>
+                    <span class="inline-block text-[11px] text-amber-300 bg-amber-950/60 border border-amber-800/60 px-3 py-1 rounded-lg">
+                        <i class="fa-solid fa-heart text-rose-500 mr-1"></i> Disusun oleh M. Padly Maulana
+                    </span>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 text-xs text-center text-slate-500">
+                &copy; 2026 M. Padly Maulana - Edukasi Tajwid Al-Qur'an Lengkap Sesuai Kaidah Riwayat Hafs 'an 'Ashim.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ==========================================================================
+           COMPLETE TAJWID DATASET WITH EXACT HARAKAT / KETUKAN DURATION
+           ========================================================================== */
+        const tajwidData = [
+            // --- NUN SUKUN & TANWIN ---
+            {
+                id: 'izhar_halqi',
+                category: 'nun_sukun',
+                harakatTag: '1_harakat',
+                harakatText: '1 Harakat (Jelas / Tanpa Dengung)',
+                ketukanCount: 1,
+                title: 'Izhar Halqi',
+                arabicTitle: 'إِظْهَار حَلْقِي',
+                colorClass: 'tj-izhar',
+                description: 'Terjadi apabila Nun Sukun (نْ) atau Tanwin (ً ٍ ٌ) bertemu salah satu dari 6 huruf halqi (tenggorokan). Dibaca jelas tanpa ditahan.',
+                huruf: ['ء', 'هـ', 'ع', 'ح', 'غ', 'خ'],
+                howToRead: 'Panjang 1 harakat saja. Dibaca sangat jelas pada makhraj huruf tanpa ada penahanan suara dengung.',
+                examples: [
+                    {
+                        arabic: 'مَنْ <span class="tj-izhar">آ</span>مَنَ',
+                        transliteration: 'Man āmana',
+                        translation: 'Barangsiapa yang beriman',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Hamzah (ء).'
+                    },
+                    {
+                        arabic: 'مِنْ <span class="tj-izhar">حَ</span>كِيمٍ حَمِيدٍ',
+                        transliteration: 'Min ḥakīmin ḥamīd',
+                        translation: 'Dari Yang Maha Bijaksana',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Ha (ح).'
+                    }
+                ]
+            },
+            {
+                id: 'idgham_bighunnah',
+                category: 'nun_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (Dengung Ditahan 2 Ketukan)',
+                ketukanCount: 2,
+                title: 'Idgham Bighunnah',
+                arabicTitle: 'إِدْغَام بِغُنَّة',
+                colorClass: 'tj-idgham',
+                description: 'Menebalkan & memasukkan bunyi Nun Sukun/Tanwin ke huruf berikutnya (ي, ن, م, و) disertai dengung yang ditahan.',
+                huruf: ['ي', 'ن', 'م', 'و'],
+                howToRead: 'Ditahan sepanjang 2 harakat (2 ketukan / 1 alif) disertai getaran dengung di pangkal hidung (khaysyum).',
+                examples: [
+                    {
+                        arabic: 'مَنْ <span class="tj-idgham">يَ</span>قُولُ',
+                        transliteration: 'May yaqūlu',
+                        translation: 'Orang yang berkata',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Ya (ي).'
+                    },
+                    {
+                        arabic: 'مَاءً <span class="tj-idgham">مُ</span>بَارَكاً',
+                        transliteration: 'Mā\'am mubārakan',
+                        translation: 'Air yang diberkahi',
+                        reason: 'Tanwin (ً) bertemu dengan Mim (م).'
+                    }
+                ]
+            },
+            {
+                id: 'idgham_bilaghunnah',
+                category: 'nun_sukun',
+                harakatTag: '1_harakat',
+                harakatText: '1 Harakat (Lebur Tanpa Dengung)',
+                ketukanCount: 1,
+                title: 'Idgham Bilaghunnah',
+                arabicTitle: 'إِدْغَام بِلَا غُنَّة',
+                colorClass: 'tj-idgham',
+                description: 'Peleburan Nun Sukun/Tanwin ke dalam huruf Lam (ل) atau Ra (ر) tanpa ada suara dengung.',
+                huruf: ['ل', 'ر'],
+                howToRead: 'Langsung masuk ke huruf Lam atau Ra dalam 1 ketukan tanpa ditahan atau didengungkan.',
+                examples: [
+                    {
+                        arabic: 'مِنْ <span class="tj-idgham">رَ</span>بِّهِمْ',
+                        transliteration: 'Mir rabbihim',
+                        translation: 'Dari Tuhan mereka',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Ra (ر).'
+                    },
+                    {
+                        arabic: 'هُدًى <span class="tj-idgham">لِ</span>لْمُتَّقِينَ',
+                        transliteration: 'Hudal lil-muttaqīn',
+                        translation: 'Petunjuk bagi orang bertakwa',
+                        reason: 'Tanwin (ً) bertemu dengan Lam (ل).'
+                    }
+                ]
+            },
+            {
+                id: 'iqlab',
+                category: 'nun_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (Tukar ke Mim & Dengung)',
+                ketukanCount: 2,
+                title: 'Iqlab',
+                arabicTitle: 'إِقْلَاب',
+                colorClass: 'tj-iqlab',
+                description: 'Mengubah suara Nun Sukun / Tanwin menjadi bunyi Mim sukun (مْ) samar saat bertemu huruf Ba (ب).',
+                huruf: ['ب'],
+                howToRead: 'Menukar ke bunyi Mim dan merapatkan bibir secara ringan, ditahan dengungnya 2 harakat (2 ketukan).',
+                examples: [
+                    {
+                        arabic: 'مِنْ <span class="tj-iqlab">بَ</span>عْدِ',
+                        transliteration: 'Mim ba‘di',
+                        translation: 'Setelah / Sesudah',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Ba (ب).'
+                    }
+                ]
+            },
+            {
+                id: 'ikhfa_haqiqi',
+                category: 'nun_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (Samar Ditahan 2 Ketukan)',
+                ketukanCount: 2,
+                title: 'Ikhfa Haqiqi',
+                arabicTitle: 'إِخْفَاء حَقِيقِي',
+                colorClass: 'tj-ikhfa',
+                description: 'Membaca Nun Sukun/Tanwin secara samar-samar ketika bertemu dengan salah satu dari 15 huruf Ikhfa.',
+                huruf: ['ت', 'ث', 'ج', 'د', 'ذ', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ف', 'ق', 'ك'],
+                howToRead: 'Disamarkan dan ditahan 2 harakat (2 ketukan) sembari bersiap mengucapkan makhraj huruf berikutnya.',
+                examples: [
+                    {
+                        arabic: 'مِنْ <span class="tj-ikhfa">دُ</span>ونِ',
+                        transliteration: 'Min dūni',
+                        translation: 'Dari selain',
+                        reason: 'Nun Sukun (نْ) bertemu dengan Dal (د).'
+                    }
+                ]
+            },
+
+            // --- MIM SUKUN & GHUNNAH ---
+            {
+                id: 'ghunnah_musyaddadah',
+                category: 'mim_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 - 3 Harakat (Dengung Sempurna)',
+                ketukanCount: 3,
+                title: 'Ghunnah Musyaddadah',
+                arabicTitle: 'غُنَّة مُشَدَّدَة',
+                colorClass: 'tj-ghunnah',
+                description: 'Setiap huruf Nun (نّ) atau Mim (مّ) yang memiliki tanda bertasydid di dalam Al-Qur\'an.',
+                huruf: ['نّ', 'مّ'],
+                howToRead: 'Wajib mendengungkan suara di pangkal hidung secara mantap selama 2 hingga 3 harakat (2-3 ketukan).',
+                examples: [
+                    {
+                        arabic: 'إِ<span class="tj-ghunnah">نَّ</span> مَعَ الْعُسْرِ يُسْراً',
+                        transliteration: 'Inna ma‘al ‘usri yusrā',
+                        translation: 'Sesungguhnya sesudah kesulitan ada kemudahan',
+                        reason: 'Huruf Nun bertasydid (نّ).'
+                    }
+                ]
+            },
+            {
+                id: 'ikhfa_shafawi',
+                category: 'mim_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (Samar di Bibir)',
+                ketukanCount: 2,
+                title: 'Ikhfa Shafawi',
+                arabicTitle: 'إِخْفَاء شَفَوِي',
+                colorClass: 'tj-ikhfa',
+                description: 'Terjadi apabila Mim Sukun (مْ) bertemu dengan huruf Ba (ب). Dibaca samar di dua bibir.',
+                huruf: ['ب'],
+                howToRead: 'Menyuarakan Mim sukun secara lembut di bibir dan ditahan dengungnya 2 harakat (2 ketukan).',
+                examples: [
+                    {
+                        arabic: 'تَرْمِيهِمْ <span class="tj-ikhfa">بِ</span>حِجَارَةٍ',
+                        transliteration: 'Tarmīhim bi-ḥijārah',
+                        translation: 'Melempar mereka dengan batu',
+                        reason: 'Mim Sukun (مْ) bertemu dengan Ba (ب).'
+                    }
+                ]
+            },
+            {
+                id: 'idgham_mislain',
+                category: 'mim_sukun',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (Lebur Mim ke Mim)',
+                ketukanCount: 2,
+                title: 'Idgham Mislain / Mutamatsilain',
+                arabicTitle: 'إِدْغَام مِثْلَيْن',
+                colorClass: 'tj-idgham',
+                description: 'Terjadi apabila Mim Sukun (مْ) bertemu dengan huruf Mim (م) yang berharakat.',
+                huruf: ['م'],
+                howToRead: 'Dimasukkan secara utuh ke Mim berikutnya dengan ditahan dengungnya 2 harakat (2 ketukan).',
+                examples: [
+                    {
+                        arabic: 'لَهُمْ <span class="tj-idgham">مَا</span> يَشَاءُونَ',
+                        transliteration: 'Lahum mā yashā\'ūn',
+                        translation: 'Bagi mereka apa yang mereka kehendaki',
+                        reason: 'Mim Sukun (مْ) bertemu dengan Mim (م).'
+                    }
+                ]
+            },
+            {
+                id: 'izhar_shafawi',
+                category: 'mim_sukun',
+                harakatTag: '1_harakat',
+                harakatText: '1 Harakat (Jelas di Bibir)',
+                ketukanCount: 1,
+                title: 'Izhar Shafawi',
+                arabicTitle: 'إِظْهَار شَفَوِي',
+                colorClass: 'tj-izhar',
+                description: 'Mim Sukun (مْ) bertemu dengan seluruh huruf hijaiyah SELAIN huruf Ba (ب) dan Mim (م).',
+                huruf: ['Seluruh huruf kecuali ب & م'],
+                howToRead: 'Membaca Mim Sukun dengan sangat jelas dan rapat bibir, tepat 1 harakat tanpa dengung dipanjang-panjangkan.',
+                examples: [
+                    {
+                        arabic: 'أَنْعَمْتَ <span class="tj-izhar">عَ</span>لَيْهِمْ',
+                        transliteration: 'An‘amta ‘alaihim',
+                        translation: 'Yang telah Engkau beri nikmat',
+                        reason: 'Mim Sukun (مْ) bertemu dengan \'Ain (ع).'
+                    }
+                ]
+            },
+
+            // --- QALQALAH ---
+            {
+                id: 'qalqalah_sugra',
+                category: 'qalqalah',
+                harakatTag: '1_harakat',
+                harakatText: '1 Ketukan (Pantulan Ringan)',
+                ketukanCount: 1,
+                title: 'Qalqalah Sugra (Kecil)',
+                arabicTitle: 'قَلْقَلَة صُغْرَى',
+                colorClass: 'tj-qalqalah',
+                description: 'Huruf Qalqalah (ق ط ب ج د) yang berharakat sukun asli di tengah-tengah kata.',
+                huruf: ['ق', 'ط', 'ب', 'ج', 'د'],
+                howToRead: 'Dipantulkan dengan ketukan ringan (1 ketukan) dan langsung bersambung ke huruf berikutnya.',
+                examples: [
+                    {
+                        arabic: 'يَقْ<span class="tj-qalqalah">طَ</span>عُونَ',
+                        transliteration: 'Yaqṭa‘ūn',
+                        translation: 'Merek memotong',
+                        reason: 'Huruf Qaf (قْ) sukun di tengah kata.'
+                    }
+                ]
+            },
+            {
+                id: 'qalqalah_kubra',
+                category: 'qalqalah',
+                harakatTag: '2_harakat',
+                harakatText: '1 - 2 Ketukan (Pantulan Kuat saat Waqaf)',
+                ketukanCount: 2,
+                title: 'Qalqalah Kubra (Besar)',
+                arabicTitle: 'قَلْقَلَة كُبْرَى',
+                colorClass: 'tj-qalqalah',
+                description: 'Huruf Qalqalah yang dihentikan (waqaf) di akhir ayat atau akhir kalimat.',
+                huruf: ['ق', 'ط', 'ب', 'ج', 'د'],
+                howToRead: 'Dipantulkan dengan suara mantap dan kuat seakan menahan 1 hingga 2 ketukan saat dihentikan.',
+                examples: [
+                    {
+                        arabic: 'مِنْ شَرِّ مَا خَ<span class="tj-qalqalah">لَقَ</span>',
+                        transliteration: 'Min sharri mā khalaq',
+                        translation: 'Dari kejahatan apa yang diciptakan',
+                        reason: 'Huruf Qaf dihentikan (waqaf).'
+                    }
+                ]
+            },
+
+            // --- ALIF LAM ---
+            {
+                id: 'al_qamariyah',
+                category: 'alif_lam',
+                harakatTag: '1_harakat',
+                harakatText: '1 Harakat (Jelas)',
+                ketukanCount: 1,
+                title: 'Alif Lam Qamariyah',
+                arabicTitle: 'اَلْقَمَرِيَّة',
+                colorClass: 'tj-izhar',
+                description: 'Alif Lam (ال) bertemu dengan salah satu dari 14 huruf Qamariyah. Huruf Lam dibaca jelas.',
+                huruf: ['ا', 'ب', 'ج', 'ح', 'خ', 'ع', 'غ', 'ف', 'ق', 'ك', 'م', 'و', 'هـ', 'ي'],
+                howToRead: 'Lam sukun dibaca terang 1 harakat tanpa melebur.',
+                examples: [
+                    {
+                        arabic: '<span class="tj-izhar">الْ</span>قَمَرُ',
+                        transliteration: 'Al-Qamaru',
+                        translation: 'Bulan',
+                        reason: 'Alif Lam bertemu Qaf (ق).'
+                    }
+                ]
+            },
+            {
+                id: 'al_syamsiyah',
+                category: 'alif_lam',
+                harakatTag: '1_harakat',
+                harakatText: '1 Harakat (Lebur ke Tasydid)',
+                ketukanCount: 1,
+                title: 'Alif Lam Syamsiyah',
+                arabicTitle: 'اَلشَّمْسِيَّة',
+                colorClass: 'tj-idgham',
+                description: 'Alif Lam (ال) bertemu salah satu 14 huruf Syamsiyah. Bunyi Lam dileburkan.',
+                huruf: ['ت', 'ث', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ل', 'ن'],
+                howToRead: 'Langsung masuk ke huruf Syamsiyah yang bertasydid dalam 1 ketukan.',
+                examples: [
+                    {
+                        arabic: '<span class="tj-idgham">الرَّ</span>حْمَٰنِ',
+                        transliteration: 'Ar-Raḥmān',
+                        translation: 'Maha Pengasih',
+                        reason: 'Alif Lam melebur ke Ra (ر).'
+                    }
+                ]
+            },
+
+            // --- HUKUM MAD ---
+            {
+                id: 'mad_thabii',
+                category: 'mad',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (2 Ketukan / 1 Alif)',
+                ketukanCount: 2,
+                title: 'Mad Thabi\'i (Mad Asli)',
+                arabicTitle: 'مَدّ طَبِيعِي',
+                colorClass: 'tj-mad',
+                description: 'Mad paling dasar. Terjadi apabila Alif (ا) setelah fathah, Wawu (و) setelah dammah, atau Ya (ي) setelah kasrah.',
+                huruf: ['ا', 'و', 'ي'],
+                howToRead: 'Dipanjangkan tepat 2 harakat (2 ketukan nada sedang / 1 alif), tidak boleh lebih maupun kurang.',
+                examples: [
+                    {
+                        arabic: 'قَ<span class="tj-mad">ا</span>لَ',
+                        transliteration: 'Qāla',
+                        translation: 'Dia telah berkata',
+                        reason: 'Alif setelah Fathah.'
+                    },
+                    {
+                        arabic: 'يَقُ<span class="tj-mad">و</span>لُ',
+                        transliteration: 'Yaqūlu',
+                        translation: 'Dia sedang berkata',
+                        reason: 'Wawu setelah Dammah.'
+                    }
+                ]
+            },
+            {
+                id: 'mad_wajib_muttashil',
+                category: 'mad',
+                harakatTag: '4_5_harakat',
+                harakatText: '4 - 5 Harakat (Washal) / 6 Harakat (Waqaf)',
+                ketukanCount: 5,
+                title: 'Mad Wajib Muttashil',
+                arabicTitle: 'مَدّ وَاجِب مُتَّصِل',
+                colorClass: 'tj-mad',
+                description: 'Mad Thabi\'i bertemu dengan huruf Hamzah (ء) dalam SATU kata bersambung.',
+                huruf: ['Mad Thabi\'i + Hamzah (1 Kata)'],
+                howToRead: 'Wajib dipanjangkan 4 sampai 5 harakat (4-5 ketukan) saat washal, atau 6 harakat jika dihentikan (waqaf).',
+                examples: [
+                    {
+                        arabic: 'جَ<span class="tj-mad">آ</span>ءَ',
+                        transliteration: 'Jā\'a',
+                        translation: 'Telah datang',
+                        reason: 'Mad bertemu Hamzah dalam 1 kata.'
+                    }
+                ]
+            },
+            {
+                id: 'mad_jaiz_munfashil',
+                category: 'mad',
+                harakatTag: '4_5_harakat',
+                harakatText: '2, 4, atau 5 Harakat (Umumnya 4-5 Ketukan)',
+                ketukanCount: 4,
+                title: 'Mad Jaiz Munfashil',
+                arabicTitle: 'مَدّ جَائِز مُنْفَصِل',
+                colorClass: 'tj-mad',
+                description: 'Mad Thabi\'i bertemu dengan huruf Hamzah (ء) pada KATA TERPISAH.',
+                huruf: ['Mad Thabi\'i + Hamzah (Beda Kata)'],
+                howToRead: 'Boleh dibaca 2, 4, atau 5 harakat. Pada thariq Syathibiyah diutamakan 4 atau 5 ketukan.',
+                examples: [
+                    {
+                        arabic: 'يَ<span class="tj-mad">آ</span> أَيُّهَا',
+                        transliteration: 'Yā ayyuhā',
+                        translation: 'Wahai orang-orang',
+                        reason: 'Mad di kata Yā bertemu Hamzah di kata Ayyuhā.'
+                    }
+                ]
+            },
+            {
+                id: 'mad_arid_lissukun',
+                category: 'mad',
+                harakatTag: '6_harakat',
+                harakatText: '2, 4, atau 6 Harakat (Saat Waqaf)',
+                ketukanCount: 6,
+                title: 'Mad \'Aridh Lissukun',
+                arabicTitle: 'مَدّ عَارِض لِلسُّكُون',
+                colorClass: 'tj-mad',
+                description: 'Mad Thabi\'i bertemu huruf hidup di akhir kata yang dibaca sukun karena dihentikan (waqaf).',
+                huruf: ['Mad Thabi\'i + Huruf Waqaf'],
+                howToRead: 'Boleh dibaca 2 ketukan (pendek), 4 ketukan (sedang), atau 6 ketukan harakat (panjang sempurna).',
+                examples: [
+                    {
+                        arabic: 'الْعَالَمِ<span class="tj-mad">ي</span>نَ',
+                        transliteration: 'Al-‘Ālamīn',
+                        translation: 'Semesta alam (di-waqafkan)',
+                        reason: 'Mad Thabi\'i diikuti Nun sukun karena waqaf.'
+                    }
+                ]
+            },
+            {
+                id: 'mad_lazim_kilmi',
+                category: 'mad',
+                harakatTag: '6_harakat',
+                harakatText: '6 Harakat (Wajib 6 Ketukan / 3 Alif)',
+                ketukanCount: 6,
+                title: 'Mad Lazim Kilmi Muthaqqal',
+                arabicTitle: 'مَدّ لَازِم كِلْمِي مُثَقَّل',
+                colorClass: 'tj-mad',
+                description: 'Mad Thabi\'i bertemu dengan huruf bertasydid dalam satu kata.',
+                huruf: ['Mad Thabi\'i + Huruf Tasydid'],
+                howToRead: 'MUTLAK wajib dipanjangkan 6 harakat (6 ketukan penuh) lalu ditekan ke huruf bertasydid.',
+                examples: [
+                    {
+                        arabic: 'وَلَا الضَّ<span class="tj-mad">آ</span>لِّينَ',
+                        transliteration: 'Wa laḍ-ḍāāāāllīn',
+                        translation: 'Dan bukan jalan mereka yang sesat',
+                        reason: 'Mad Thabi\'i bertemu huruf Lam bertasydid.'
+                    }
+                ]
+            },
+            {
+                id: 'mad_silah_qashirah',
+                category: 'mad',
+                harakatTag: '2_harakat',
+                harakatText: '2 Harakat (2 Ketukan)',
+                ketukanCount: 2,
+                title: 'Mad Silah Qashirah',
+                arabicTitle: 'مَدّ صِلَة قَصِيرَة',
+                colorClass: 'tj-mad',
+                description: 'Ha Dhamir (هـ) kata ganti yang diapit huruf-huruf berharakat dan tidak bertemu Hamzah.',
+                huruf: ['Ha Dhamir (هـ)'],
+                howToRead: 'Dibaca panjang tepat 2 harakat (2 ketukan / 1 alif).',
+                examples: [
+                    {
+                        arabic: 'إِنَّهُ<span class="tj-mad">ۥ</span> كَانَ',
+                        transliteration: 'Innahū kāna',
+                        translation: 'Sesungguhnya dia adalah',
+                        reason: 'Ha Dhamir diapit huruf berharakat.'
+                    }
+                ]
+            }
+        ];
+
+        /* ==========================================================================
+           QUIZ QUESTIONS (TAJWID & HARAKAT)
+           ========================================================================== */
+        const quizQuestions = [
+            {
+                question: 'Berapakah panjang bacaan harakat yang WAJIB untuk hukum Mad Lazim Kilmi Muthaqqal?',
+                arabic: 'وَلَا الضَّآلِّينَ',
+                options: ['2 Harakat', '4 Harakat', '6 Harakat (6 Ketukan)', '3 Harakat'],
+                correct: 2,
+                explanation: 'Benar! Mad Lazim Muthaqqal wajib dibaca panjang 6 harakat / 6 ketukan penuh (3 alif).'
+            },
+            {
+                question: 'Apabila Nun Sukun (نْ) bertemu huruf Hamzah (ء) pada "مَنْ آمَنَ", berapa harakat panjang bacaannya?',
+                arabic: 'مَنْ آمَنَ',
+                options: ['1 Harakat (Jelas tanpa dengung)', '2 Harakat (Dengung)', '5 Harakat', '6 Harakat'],
+                correct: 0,
+                explanation: 'Benar! Izhar Halqi dibaca jelas 1 harakat saja tanpa penahanan dengung.'
+            },
+            {
+                question: 'Berapakah ketukan dengung yang harus ditahan pada Hukum Idgham Bighunnah atau Ikhfa Haqiqi?',
+                arabic: null,
+                options: ['1 Ketukan', '2 Harakat / Ketukan', '4 Ketukan', '6 Ketukan'],
+                correct: 1,
+                explanation: 'Benar! Dengung pada Idgham Bighunnah, Iqlab, dan Ikhfa ditahan sepanjang 2 harakat / 2 ketukan.'
+            },
+            {
+                question: 'Berapa harakat panjang bacaan standar untuk Mad Thabi\'i (Mad Asli)?',
+                arabic: 'قَالَ',
+                options: ['2 Harakat (2 Ketukan / 1 Alif)', '4 Harakat', '5 Harakat', '6 Harakat'],
+                correct: 0,
+                explanation: 'Benar! Mad Thabi\'i dipanjangkan tepat 2 harakat atau 2 ketukan.'
+            },
+            {
+                question: 'Mad Wajib Muttashil (Mad bertemu Hamzah dalam 1 kata) dipanjangkan sebanyak...',
+                arabic: 'جَاءَ',
+                options: ['2 Harakat', '4 - 5 Harakat (Washal)', '6 Harakat saja', '1 Harakat'],
+                correct: 1,
+                explanation: 'Benar! Mad Wajib Muttashil dibaca 4 sampai 5 harakat saat washal.'
+            },
+            {
+                question: 'Hukum apakah yang terjadi pada "إِنَّ" (Nun bertasydid) dan berapa ketukan dengungnya?',
+                arabic: 'إِنَّ',
+                options: ['Izhar (1 harakat)', 'Ghunnah Musyaddadah (2 - 3 harakat)', 'Qalqalah (1 ketukan)', 'Mad Thabi\'i (2 harakat)'],
+                correct: 1,
+                explanation: 'Benar! Nun/Mim bertasydid dinamakan Ghunnah Musyaddadah, ditahan dengungnya 2-3 harakat.'
+            },
+            {
+                question: 'Manakah dari hukum berikut yang boleh dibaca hingga 6 harakat saat Waqaf (berhenti)?',
+                arabic: 'الْعَالَمِينَ',
+                options: ['Izhar Halqi', 'Mad \'Aridh Lissukun', 'Iqlab', 'Idgham Bilaghunnah'],
+                correct: 1,
+                explanation: 'Benar! Mad \'Aridh Lissukun boleh dibaca 2, 4, atau 6 harakat saat waqaf.'
+            }
+        ];
+
+        /* ==========================================================================
+           APPLICATION STATE & VARIABLES
+           ========================================================================== */
+        let currentCategory = 'all';
+        let currentHarakatFilter = 'all';
+        let searchQuery = '';
+        let bookmarks = JSON.parse(localStorage.getItem('mpadly_bookmarks') || '[]');
+        
+        // Metronome State
+        let metronomeCount = 2;
+        let isMetronomePlaying = false;
+        let metronomeInterval = null;
+        let audioCtx = null;
+
+        // Quiz State
+        let quizIndex = 0;
+        let quizScore = 0;
+        let answered = false;
+
+        /* ==========================================================================
+           INITIALIZATION
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTajwidCards();
+            updateBookmarkCount();
+            renderMetronomeDots();
+
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        /* ==========================================================================
+           RENDER CARDS FUNCTION
+           ========================================================================== */
+        function renderTajwidCards() {
+            const container = document.getElementById('tajwidContainer');
+            const emptyResult = document.getElementById('emptyResult');
+            const resultCount = document.getElementById('resultCount');
+            
+            container.innerHTML = '';
+
+            let filtered = tajwidData.filter(item => {
+                const matchesCat = currentCategory === 'all' || item.category === currentCategory;
+                const matchesHarakat = currentHarakatFilter === 'all' || item.harakatTag === currentHarakatFilter;
+                
+                const q = searchQuery.toLowerCase();
+                const matchesSearch = searchQuery === '' || 
+                    item.title.toLowerCase().includes(q) ||
+                    item.description.toLowerCase().includes(q) ||
+                    item.harakatText.toLowerCase().includes(q) ||
+                    item.huruf.some(h => h.toLowerCase().includes(q)) ||
+                    item.examples.some(e => e.transliteration.toLowerCase().includes(q));
+                
+                return matchesCat && matchesHarakat && matchesSearch;
+            });
+
+            resultCount.textContent = `Menampilkan ${filtered.length} Materi`;
+
+            if (filtered.length === 0) {
+                container.classList.add('hidden');
+                emptyResult.classList.remove('hidden');
+                return;
+            } else {
+                container.classList.remove('hidden');
+                emptyResult.classList.add('hidden');
+            }
+
+            filtered.forEach(item => {
+                const isBookmarked = bookmarks.includes(item.id);
+                
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700/70 p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative';
+
+                const hurufBadges = item.huruf.map(h => 
+                    `<span class="inline-block bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-arabic text-base px-2.5 py-0.5 rounded-lg border border-slate-200 dark:border-slate-600">${h}</span>`
+                ).join(' ');
+
+                const examplesHTML = item.examples.map((ex, idx) => `
+                    <div class="bg-slate-50 dark:bg-slate-900/80 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/60 relative">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Contoh Ayat ${idx + 1}</span>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="speakArabic('${cleanArabicText(ex.arabic)}')" class="p-1.5 text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" title="Dengarkan Pronunsiasi">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                                <button onclick="openAnalysisModal('${item.id}', ${idx})" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                                    <span>Analisis</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="font-arabic text-2xl text-right text-slate-900 dark:text-white mb-1 leading-relaxed">
+                            ${ex.arabic}
+                        </div>
+                        <div class="text-xs font-bold text-amber-600 dark:text-amber-400">
+                            ${ex.transliteration}
+                        </div>
+                        <div class="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                            "${ex.translation}"
+                        </div>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Header Card -->
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div>
+                                <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider ${item.colorClass} mb-2">
+                                    ${getCategoryName(item.category)}
+                                </span>
+                                <h3 class="text-xl font-black text-slate-900 dark:text-white">
+                                    ${item.title}
+                                </h3>
+                            </div>
+                            <button onclick="toggleBookmark('${item.id}')" class="text-slate-300 dark:text-slate-600 hover:text-amber-500 dark:hover:text-amber-400 transition-colors text-lg" title="Simpan Materi">
+                                <i class="${isBookmarked ? 'fa-solid text-amber-500' : 'fa-regular'} fa-bookmark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Harakat Badge Callout -->
+                        <div class="mb-4 p-2.5 bg-amber-500/10 dark:bg-amber-950/40 rounded-xl border border-amber-500/30 flex items-center space-x-2 text-xs text-amber-800 dark:text-amber-300 font-bold">
+                            <i class="fa-solid fa-stopwatch text-amber-500"></i>
+                            <span>${item.harakatText}</span>
+                        </div>
+
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                            ${item.description}
+                        </p>
+
+                        <!-- Huruf Section -->
+                        <div class="mb-5">
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Huruf Tajwid:</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${hurufBadges}
+                            </div>
+                        </div>
+
+                        <!-- Examples -->
+                        <div class="space-y-3 mb-4">
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Contoh Bacaan:</span>
+                            ${examplesHTML}
+                        </div>
+                    </div>
+
+                    <!-- How to Read Footer -->
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 mt-2">
+                        <div class="flex items-start space-x-2 text-xs text-slate-500 dark:text-slate-400">
+                            <i class="fa-solid fa-circle-info text-amber-500 mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-slate-700 dark:text-slate-300">Cara Membaca: </span>
+                                <span>${item.howToRead}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        /* ==========================================================================
+           METRONOME & HARAKAT BEAT COUNTER LOGIC
+           ========================================================================== */
+        function renderMetronomeDots() {
+            const container = document.getElementById('beatDotsContainer');
+            const statusText = document.getElementById('metronomeStatusText');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= metronomeCount; i++) {
+                const dot = document.createElement('div');
+                dot.id = `beat-dot-${i}`;
+                dot.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-800 border-2 border-emerald-500/40 text-emerald-400 font-extrabold flex items-center justify-center text-sm sm:text-base shadow-md transition-all';
+                dot.textContent = i;
+                container.appendChild(dot);
+            }
+
+            statusText.textContent = `Target simulasi: ${metronomeCount} Harakat / Ketukan Tempo Standard`;
+        }
+
+        function setMetronomeCount(count) {
+            if (isMetronomePlaying) stopMetronome();
+            metronomeCount = count;
+
+            document.querySelectorAll('.metro-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'ring-2', 'ring-emerald-400');
+                btn.classList.add('bg-slate-700');
+            });
+
+            const activeBtn = document.getElementById(`metro-${count}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-700');
+                activeBtn.classList.add('bg-emerald-600', 'ring-2', 'ring-emerald-400');
+            }
+
+            renderMetronomeDots();
+        }
+
+        function playMetronomeBeep() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.value = 750; // 750Hz clean synth beep sound
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch (e) {
+                console.log('Audio Context Error:', e);
+            }
+        }
+
+        function toggleMetronome() {
+            if (isMetronomePlaying) {
+                stopMetronome();
+            } else {
+                startMetronome();
+            }
+        }
+
+        function startMetronome() {
+            isMetronomePlaying = true;
+            document.getElementById('metroPlayIcon').className = 'fa-solid fa-square';
+            document.getElementById('metroPlayText').textContent = 'Hentikan Ketukan';
+
+            let currentBeat = 1;
+            playBeat(currentBeat);
+
+            // 500ms per beat = 120 BPM standard recitation tempo
+            metronomeInterval = setInterval(() => {
+                currentBeat++;
+                if (currentBeat > metronomeCount) {
+                    currentBeat = 1;
+                }
+                playBeat(currentBeat);
+            }, 500);
+        }
+
+        function playBeat(beatNum) {
+            playMetronomeBeep();
+
+            for (let i = 1; i <= metronomeCount; i++) {
+                const dot = document.getElementById(`beat-dot-${i}`);
+                if (dot) {
+                    if (i === beatNum) {
+                        dot.classList.add('bg-amber-400', 'text-slate-950', 'scale-125', 'border-amber-300', 'shadow-amber-400/50');
+                        dot.classList.remove('bg-slate-800', 'text-emerald-400');
+                    } else {
+                        dot.classList.remove('bg-amber-400', 'text-slate-950', 'scale-125', 'border-amber-300', 'shadow-amber-400/50');
+                        dot.classList.add('bg-slate-800', 'text-emerald-400');
+                    }
+                }
+            }
+        }
+
+        function stopMetronome() {
+            isMetronomePlaying = false;
+            clearInterval(metronomeInterval);
+            document.getElementById('metroPlayIcon').className = 'fa-solid fa-play';
+            document.getElementById('metroPlayText').textContent = 'Bunyikan Ketukan';
+
+            for (let i = 1; i <= metronomeCount; i++) {
+                const dot = document.getElementById(`beat-dot-${i}`);
+                if (dot) {
+                    dot.classList.remove('bg-amber-400', 'text-slate-950', 'scale-125', 'border-amber-300', 'shadow-amber-400/50');
+                    dot.classList.add('bg-slate-800', 'text-emerald-400');
+                }
+            }
+        }
+
+        /* ==========================================================================
+           SEARCH & FILTER HANDLERS
+           ========================================================================== */
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+
+            const activeBtn = document.getElementById(`btn-cat-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+                activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
+            }
+
+            renderTajwidCards();
+        }
+
+        function filterHarakat(hkTag) {
+            currentHarakatFilter = hkTag;
+            document.querySelectorAll('.hk-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+
+            const activeBtn = document.getElementById(`btn-hk-${hkTag}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+                activeBtn.classList.add('bg-amber-600', 'text-white', 'shadow-sm');
+            }
+
+            renderTajwidCards();
+        }
+
+        function handleSearch() {
+            const input = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearSearchBtn');
+            searchQuery = input.value.trim();
+
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            renderTajwidCards();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            searchQuery = '';
+            renderTajwidCards();
+        }
+
+        function resetFilters() {
+            clearSearch();
+            filterCategory('all');
+            filterHarakat('all');
+        }
+
+        function getCategoryName(catKey) {
+            switch(catKey) {
+                case 'nun_sukun': return 'Nun Sukun / Tanwin';
+                case 'mim_sukun': return 'Mim Sukun & Ghunnah';
+                case 'qalqalah': return 'Qalqalah';
+                case 'alif_lam': return 'Alif Lam';
+                case 'mad': return 'Hukum Mad';
+                default: return 'Tajwid';
+            }
+        }
+
+        /* ==========================================================================
+           SPEECH SYNTHESIS
+           ========================================================================== */
+        function cleanArabicText(rawHTML) {
+            const temp = document.createElement('div');
+            temp.innerHTML = rawHTML;
+            return temp.textContent || temp.innerText || '';
+        }
+
+        function speakArabic(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.75; // Slower rate to clearly hear Tajwid beats
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* ==========================================================================
+           ANALYSIS MODAL HANDLER
+           ========================================================================== */
+        function openAnalysisModal(ruleId, exampleIndex) {
+            const item = tajwidData.find(r => r.id === ruleId);
+            if (!item) return;
+
+            const example = item.examples[exampleIndex];
+
+            document.getElementById('modalArabic').innerHTML = example.arabic;
+            document.getElementById('modalTransliteration').textContent = example.transliteration;
+            document.getElementById('modalTranslation').textContent = `"${example.translation}"`;
+            
+            const badge = document.getElementById('modalRuleBadge');
+            badge.textContent = `${item.title} (${item.arabicTitle})`;
+            badge.className = `inline-block px-3 py-1 rounded-lg text-xs font-bold ${item.colorClass}`;
+
+            document.getElementById('modalHarakatBadge').textContent = item.harakatText;
+            document.getElementById('modalReason').textContent = example.reason;
+            document.getElementById('modalHowToRead').textContent = item.howToRead;
+
+            const modal = document.getElementById('analysisModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-95');
+            modal.querySelector('div').classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('analysisModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+        }
+
+        /* ==========================================================================
+           BOOKMARKS
+           ========================================================================== */
+        function toggleBookmark(id) {
+            if (bookmarks.includes(id)) {
+                bookmarks = bookmarks.filter(bId => bId !== id);
+            } else {
+                bookmarks.push(id);
+            }
+            localStorage.setItem('mpadly_bookmarks', JSON.stringify(bookmarks));
+            updateBookmarkCount();
+            renderTajwidCards();
+            renderBookmarksList();
+        }
+
+        function updateBookmarkCount() {
+            document.getElementById('bookmarkCount').textContent = bookmarks.length;
+        }
+
+        function toggleBookmarksModal() {
+            const modal = document.getElementById('bookmarksModal');
+            const isHidden = modal.classList.contains('opacity-0');
+
+            if (isHidden) {
+                renderBookmarksList();
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function renderBookmarksList() {
+            const listContainer = document.getElementById('bookmarksList');
+            listContainer.innerHTML = '';
+
+            if (bookmarks.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <i class="fa-regular fa-bookmark text-3xl mb-2"></i>
+                        <p class="text-xs">Belum ada materi tajwid tersimpan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            bookmarks.forEach(id => {
+                const item = tajwidData.find(r => r.id === id);
+                if (!item) return;
+
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600';
+                div.innerHTML = `
+                    <div>
+                        <span class="text-xs font-bold text-slate-900 dark:text-white block">${item.title}</span>
+                        <span class="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">${item.harakatText}</span>
+                    </div>
+                    <button onclick="toggleBookmark('${item.id}')" class="text-rose-500 hover:text-rose-700 text-sm p-2">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        /* ==========================================================================
+           QUIZ ENGINE
+           ========================================================================== */
+        function startQuiz() {
+            quizIndex = 0;
+            quizScore = 0;
+            answered = false;
+
+            document.getElementById('quizStartScreen').classList.add('hidden');
+            document.getElementById('quizResultScreen').classList.add('hidden');
+            document.getElementById('quizActiveScreen').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            answered = false;
+            const q = quizQuestions[quizIndex];
+
+            document.getElementById('quizProgressText').textContent = `Pertanyaan ${quizIndex + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quizScoreText').textContent = `Skor: ${quizScore}`;
+            
+            const progressPercent = ((quizIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quizProgressBar').style.width = `${progressPercent}%`;
+
+            document.getElementById('quizQuestion').textContent = q.question;
+
+            const arabicPreview = document.getElementById('quizArabicPreview');
+            if (q.arabic) {
+                arabicPreview.classList.remove('hidden');
+                document.getElementById('quizArabicText').textContent = q.arabic;
+            } else {
+                arabicPreview.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt-btn text-left p-4 rounded-xl bg-slate-700/50 hover:bg-slate-700 border border-slate-600/60 font-semibold text-sm transition-all flex items-center justify-between';
+                btn.onclick = () => selectQuizAnswer(idx);
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-400 opt-icon"></i>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quizFeedback').classList.add('hidden');
+            document.getElementById('nextQuestionBtn').classList.add('hidden');
+        }
+
+        function selectQuizAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizQuestions[quizIndex];
+            const buttons = document.querySelectorAll('.quiz-opt-btn');
+            const feedback = document.getElementById('quizFeedback');
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                const icon = btn.querySelector('.opt-icon');
+
+                if (idx === q.correct) {
+                    btn.classList.remove('bg-slate-700/50', 'border-slate-600/60');
+                    btn.classList.add('bg-emerald-600/30', 'border-emerald-500', 'text-emerald-200');
+                    icon.className = 'fa-solid fa-circle-check text-emerald-400';
+                } else if (idx === selectedIndex) {
+                    btn.classList.remove('bg-slate-700/50', 'border-slate-600/60');
+                    btn.classList.add('bg-rose-600/30', 'border-rose-500', 'text-rose-200');
+                    icon.className = 'fa-solid fa-circle-xmark text-rose-400';
+                }
+            });
+
+            if (selectedIndex === q.correct) {
+                quizScore += 10;
+                document.getElementById('quizScoreText').textContent = `Skor: ${quizScore}`;
+                feedback.className = 'p-4 rounded-xl mb-6 bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-sm font-medium';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-2 text-emerald-400"></i> ${q.explanation}`;
+            } else {
+                feedback.className = 'p-4 rounded-xl mb-6 bg-rose-950/80 border border-rose-500/50 text-rose-300 text-sm font-medium';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2 text-rose-400"></i> Salah! ${q.explanation}`;
+            }
+
+            feedback.classList.remove('hidden');
+
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            if (quizIndex < quizQuestions.length - 1) {
+                nextBtn.innerHTML = 'Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>';
+            } else {
+                nextBtn.innerHTML = 'Lihat Hasil Akhir <i class="fa-solid fa-trophy ml-1"></i>';
+            }
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (quizIndex < quizQuestions.length - 1) {
+                quizIndex++;
+                renderQuizQuestion();
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            document.getElementById('quizActiveScreen').classList.add('hidden');
+            const resultScreen = document.getElementById('quizResultScreen');
+            resultScreen.classList.remove('hidden');
+
+            const maxScore = quizQuestions.length * 10;
+            const percentage = (quizScore / maxScore) * 100;
+            document.getElementById('finalScore').textContent = `${quizScore} / ${maxScore}`;
+
+            const icon = document.getElementById('quizResultIcon');
+            const title = document.getElementById('quizResultTitle');
+            const subtitle = document.getElementById('quizResultSubtitle');
+
+            if (percentage >= 80) {
+                icon.className = 'w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-xl';
+                icon.innerHTML = '<i class="fa-solid fa-crown"></i>';
+                title.textContent = 'Mumtaz! (Sangat Baik)';
+                subtitle.textContent = 'Luar Biasa! Pemahaman Anda tentang hukum tajwid dan ketukan harakat sangat tajam.';
+            } else if (percentage >= 50) {
+                icon.className = 'w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 bg-amber-500/20 text-amber-400 border border-amber-500/40 shadow-xl';
+                icon.innerHTML = '<i class="fa-solid fa-star"></i>';
+                title.textContent = 'Jayyid (Cukup Baik)';
+                subtitle.textContent = 'Bagus! Anda memahami sebagian besar kaidah harakat dan tajwid.';
+            } else {
+                icon.className = 'w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-4 bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-xl';
+                icon.innerHTML = '<i class="fa-solid fa-book-open"></i>';
+                title.textContent = 'Perlu Belajar Lagi';
+                subtitle.textContent = 'Pelajari kembali tabel harakat & metronome ketukan di atas, lalu ulangi kuis.';
+            }
+        }
+
+        /* ==========================================================================
+           THEME TOGGLE
+           ========================================================================== */
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+    </script>
+</body>
+</html>
