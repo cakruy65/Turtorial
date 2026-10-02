@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Chess Go Go - Official Strategy & Commander Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        chou: {
+                            primary: '#ef4444',
+                            gold: '#f59e0b',
+                            dark: '#450a0a'
+                        },
+                        luoyi: {
+                            cyan: '#06b6d4',
+                            purple: '#a855f7',
+                            dark: '#3b0764'
+                        },
+                        mc: {
+                            bg: '#070a12',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            gold: '#fbbf24'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Teko', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .chou-glow {
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+        }
+        .luoyi-glow {
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+        }
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.25);
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070a12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fbbf24;
+        }
+    </style>
+</head>
+<body class="bg-mc-bg text-slate-100 font-sans antialiased bg-grid-pattern min-h-screen selection:bg-mc-gold selection:text-black">
+
+    <!-- Sticky Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-chou-primary via-mc-gold to-luoyi-cyan flex items-center justify-center font-heading text-2xl font-bold text-black shadow-lg">
+                        MC
+                    </div>
+                    <div>
+                        <span class="font-heading text-2xl tracking-wider uppercase font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-400 to-cyan-400">
+                            MAGIC CHESS GO GO
+                        </span>
+                        <span class="block text-[10px] tracking-widest text-slate-400 uppercase font-bold -mt-1">
+                            Original MLBB Commander Guide & Simulator
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="#showcase" class="px-3 py-2 text-xs lg:text-sm font-semibold text-slate-300 hover:text-mc-gold transition-colors hover:bg-slate-800/50 rounded-lg">
+                        <i class="fa-solid fa-user-ninja text-chou-primary mr-1"></i> Live Character Showcase
+                    </a>
+                    <a href="#chou-guide" class="px-3 py-2 text-xs lg:text-sm font-semibold text-slate-300 hover:text-chou-primary transition-colors hover:bg-slate-800/50 rounded-lg">
+                        <i class="fa-solid fa-fist-raised text-chou-primary mr-1"></i> Chou Guide
+                    </a>
+                    <a href="#luoyi-guide" class="px-3 py-2 text-xs lg:text-sm font-semibold text-slate-300 hover:text-luoyi-cyan transition-colors hover:bg-slate-800/50 rounded-lg">
+                        <i class="fa-solid fa-yin-yang text-luoyi-cyan mr-1"></i> Luo Yi Guide
+                    </a>
+                    <a href="#simulator" class="px-3 py-2 text-xs lg:text-sm font-semibold text-slate-300 hover:text-mc-gold transition-colors hover:bg-slate-800/50 rounded-lg">
+                        <i class="fa-solid fa-chess-board text-mc-gold mr-1"></i> Board Simulator
+                    </a>
+                    <a href="#matchup" class="px-3 py-2 text-xs lg:text-sm font-semibold text-slate-300 hover:text-purple-400 transition-colors hover:bg-slate-800/50 rounded-lg">
+                        <i class="fa-solid fa-scale-balanced text-purple-400 mr-1"></i> Matchup
+                    </a>
+                </nav>
+
+                <!-- Actions / Audio SFX Controller -->
+                <div class="flex items-center gap-3">
+                    <button id="soundToggleBtn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-slate-300 hover:border-mc-gold hover:text-mc-gold transition-all">
+                        <i id="soundIcon" class="fa-solid fa-volume-high text-mc-gold"></i>
+                        <span id="soundLabel" class="hidden sm:inline font-medium">Audio SFX: ON</span>
+                    </button>
+                    <a href="#simulator" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 font-bold text-xs text-black uppercase tracking-wider shadow-lg hover:brightness-110 transition-all">
+                        <i class="fa-solid fa-play"></i> Simulator
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative py-12 lg:py-16 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700 text-xs font-semibold text-mc-gold mb-4 shadow-inner">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                Original MLBB Character Design & Skill Mechanics
+            </div>
+            <h1 class="font-heading text-5xl sm:text-7xl font-extrabold tracking-tight uppercase leading-none mb-4">
+                Panduan Strategic Gameplay <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-yellow-400">Commander Chou</span> & 
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400">Commander Luo Yi</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-6">
+                Visualisasi interaktif karakter orisinal Mobile Legends: Kung-Fu Boy Chou dengan rompi hitam-emas dan sabuk merahnya, serta Geomancer Luo Yi dengan jubah oriental dan portal Yin-Yang melayang.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#showcase" class="px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:brightness-110 text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-fire"></i> Lihat Animasi Original Karakter
+                </a>
+                <a href="#simulator" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-chess-board text-mc-gold"></i> Uji Papan Catur 8x4
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Animated Commander Showcase Section -->
+    <section id="showcase" class="py-12 bg-slate-950/60 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-mc-gold">Original Character Model Renderer</span>
+                    <h2 class="font-heading text-4xl font-bold uppercase tracking-wide text-slate-100">
+                        Animasi Karakter Orisinal MLBB
+                    </h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-md">
+                    Kanvas berikut merender detail visual orisinal: Pose Kung-Fu Chou dengan aura api merah & sabuk melayang, serta pose melayang Luo Yi dengan portal Yin-Yang kosmik.
+                </p>
+            </div>
+
+            <!-- Dual Canvas Showcase Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chou Showcase Card -->
+                <div class="glass-panel rounded-2xl p-5 border-slate-800 relative overflow-hidden group hover:border-chou-primary/50 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-chou-primary/20 border border-chou-primary/40 flex items-center justify-center text-chou-primary font-bold text-xl">
+                                🥊
+                            </div>
+                            <div>
+                                <h3 class="font-heading text-2xl font-bold uppercase text-slate-100">Commander Chou (Kung-Fu Boy)</h3>
+                                <p class="text-xs text-chou-primary font-semibold">Black-Gold Vestment & Red Belt Sash</p>
+                            </div>
+                        </div>
+                        <span id="chouStatusBadge" class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase bg-chou-primary/20 text-chou-primary border border-chou-primary/30">
+                            Stance: Martial Guard
+                        </span>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="relative w-full h-80 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 mb-4 shadow-inner">
+                        <canvas id="chouCanvas" class="w-full h-full block"></canvas>
+                        <!-- Floating Badge Overlay -->
+                        <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-[11px] text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-fire text-amber-400"></i> Aura Api: <span id="chouAuraText" class="font-bold text-amber-400">Aktif (Flame Energy)</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Skill Triggers for Chou -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button onclick="triggerChouSkill('SKILL1')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-chou-primary hover:text-white text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-hand-fist"></i> Skill 1: Jeet Kune
+                        </button>
+                        <button onclick="triggerChouSkill('SKILL2')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-amber-500 hover:text-black text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-bolt"></i> Skill 2: Shunpo Dash
+                        </button>
+                        <button onclick="triggerChouSkill('SKILL3')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-red-600 hover:text-white text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-dragon"></i> Skill 3: Dragon Kick
+                        </button>
+                        <button onclick="toggleChouAura()" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-fire-flame-curved text-amber-400"></i> Toggle Aura
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Luo Yi Showcase Card -->
+                <div class="glass-panel rounded-2xl p-5 border-slate-800 relative overflow-hidden group hover:border-luoyi-cyan/50 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-luoyi-cyan/20 border border-luoyi-cyan/40 flex items-center justify-center text-luoyi-cyan font-bold text-xl">
+                                ☯️
+                            </div>
+                            <div>
+                                <h3 class="font-heading text-2xl font-bold uppercase text-slate-100">Commander Luo Yi (Yin-Yang Geomancer)</h3>
+                                <p class="text-xs text-luoyi-cyan font-semibold">Oriental Purple Robes & Silver Flowing Hair</p>
+                            </div>
+                        </div>
+                        <span id="luoyiStatusBadge" class="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase bg-luoyi-cyan/20 text-luoyi-cyan border border-luoyi-cyan/30">
+                            Stance: Mystical Levitation
+                        </span>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="relative w-full h-80 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 mb-4 shadow-inner">
+                        <canvas id="luoyiCanvas" class="w-full h-full block"></canvas>
+                        <!-- Floating Badge Overlay -->
+                        <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 text-[11px] text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-yin-yang text-luoyi-cyan"></i> Portal Yin-Yang: <span id="luoyiPortalText" class="font-bold text-luoyi-cyan">Berputar (Resonansi Kosmik)</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Skill Triggers for Luo Yi -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button onclick="triggerLuoYiSkill('SKILL1')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-luoyi-cyan hover:text-black text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-circle-dot"></i> Skill 1: Dispersion
+                        </button>
+                        <button onclick="triggerLuoYiSkill('SKILL2')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-purple-600 hover:text-white text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-rotate text-purple-300"></i> Skill 2: Rotation
+                        </button>
+                        <button onclick="triggerLuoYiSkill('SKILL3')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-cyan-500 hover:text-black text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-shuffle"></i> Skill 3: Diversion
+                        </button>
+                        <button onclick="toggleLuoYiPortal()" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition-all border border-slate-700 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-atom text-purple-400"></i> Toggle Portal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chou Full Strategy Guide -->
+    <section id="chou-guide" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="px-3 py-1 rounded-md bg-chou-primary/20 text-chou-primary border border-chou-primary/30 text-xs font-bold uppercase">
+                    Commander Deep-Dive #1
+                </span>
+            </div>
+            <h2 class="font-heading text-5xl font-extrabold uppercase tracking-tight text-slate-100 mb-8">
+                Panduan Lengkap Strategi <span class="text-chou-primary">Commander Chou</span>
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Skill Breakdown (2 Columns) -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-panel rounded-2xl p-6 border-slate-800">
+                        <h3 class="text-xl font-bold mb-4 text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-chou-primary"></i> Detail Mechanic Skill Chou
+                        </h3>
+
+                        <!-- Tabs for Chou Skills -->
+                        <div class="grid grid-cols-3 gap-2 mb-6 p-1 bg-slate-900 rounded-xl border border-slate-800">
+                            <button onclick="switchChouSkillTab(1)" id="chouTab1" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all bg-chou-primary text-white shadow">
+                                Skill 1: Jeet Kune Do
+                            </button>
+                            <button onclick="switchChouSkillTab(2)" id="chouTab2" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200">
+                                Skill 2: Shunpo Shield
+                            </button>
+                            <button onclick="switchChouSkillTab(3)" id="chouTab3" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200">
+                                Skill 3: Way of Dragon
+                            </button>
+                        </div>
+
+                        <!-- Skill Content Panels -->
+                        <div id="chouSkillContent1" class="space-y-4">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-amber-400">Skill 1: Jeet Kune Do (Martial Knockup)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Physical Area Stun & Damage Buff</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold rounded">Cooldown: 3 Round</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Setiap kali hero tim Anda melancarkan 5 kali serangan dasar, Chou akan memancarkan energi martial api. Hero frontliner terdepan akan menghantam tanah, memberikan efek Knockup (airborne) selama 1.2 detik pada musuh di area sekitar serta menambah +20% Physical ATK.
+                            </p>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+                                <span class="font-bold text-mc-gold"><i class="fa-solid fa-lightbulb"></i> Rekomendasi Sinergi:</span>
+                                <p>Sangat kuat dikombinasikan dengan sinergi **Wrestler (6/6)** atau **Weapon Master (6/6)** yang mengandalkan kecepatan serangan dasar tinggi.</p>
+                            </div>
+                        </div>
+
+                        <div id="chouSkillContent2" class="space-y-4 hidden">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-amber-400">Skill 2: Shunpo Shield (Perisai Kebal CC)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Defensive Shield & Anti Crowd-Control</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold rounded">Cooldown: Pasif Pertempuran</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Pada awal pertempuran, hero garis depan memperoleh Shield setara 25% Max HP dan kekebalan terhadap efek Crowd Control (Stun/Freeze/Slow) selama 4 detik pertama.
+                            </p>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+                                <span class="font-bold text-mc-gold"><i class="fa-solid fa-lightbulb"></i> Rekomendasi Sinergi:</span>
+                                <p>Menjadi penghitung sempurna melawan musuh yang mengandalkan ultimate pembuka seperti Akai, Gatotkaca, atau Aurora.</p>
+                            </div>
+                        </div>
+
+                        <div id="chouSkillContent3" class="space-y-4 hidden">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-amber-400">Skill 3: Way of Dragon (Tendangan Isolasi)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Targeted Isolation Execution</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-bold rounded">Cooldown: 4 Round</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Chou menandai hero Carry musuh yang memiliki Damage tertinggi. Pada detik ke-5 pertempuran, naga api Chou akan menendang hero sasaran tersebut langsung ke tengah barisan depan Anda untuk dihabisi secara cepat.
+                            </p>
+                            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+                                <span class="font-bold text-mc-gold"><i class="fa-solid fa-lightbulb"></i> Rekomendasi Sinergi:</span>
+                                <p>Trik paling ampuh untuk menghancurkan formasi Marksman/Mage pojok musuh tanpa perlu bersusah payah menembus tank depan mereka.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Synergy Recommendations Card -->
+                    <div class="glass-panel rounded-2xl p-6 border-slate-800">
+                        <h3 class="text-xl font-bold mb-4 text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-mc-gold"></i> Rekomendasi Sinergi Utama Chou
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-sm text-red-400">🥊 Wrestler (6/6)</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] bg-red-500/20 text-red-400 font-bold">Tier S</span>
+                                </div>
+                                <p class="text-xs text-slate-400">
+                                    Peluang stun beruntun yang bertumpuk dengan efek knockup Jeet Kune Do Chou.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-sm text-yellow-400">🛡️ Weapon Master (6/6)</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] bg-yellow-500/20 text-yellow-400 font-bold">Tier S</span>
+                                </div>
+                                <p class="text-xs text-slate-400">
+                                    Lifesteal fisik masif yang membuat barisan depan Chou tidak pernah tumbang.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment & Phase Strategy Sidebar -->
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-2xl p-6 border-slate-800">
+                        <h3 class="text-xl font-bold mb-4 text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-chou-primary"></i> Item Wajib Carry Chou
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-red-950 border border-red-500/40 flex items-center justify-center text-red-400 font-bold text-lg">
+                                    🗡️
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-200">Blade of Despair</h4>
+                                    <p class="text-[11px] text-slate-400">+160 Physical ATK (Burst ke musuh HP <50%)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-amber-950 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg">
+                                    🪓
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-200">Haas's Claws</h4>
+                                    <p class="text-[11px] text-slate-400">+40% Physical Lifesteal & Crit Chance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Luo Yi Full Strategy Guide -->
+    <section id="luoyi-guide" class="py-16 bg-slate-950/40 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 mb-2">
+                <span class="px-3 py-1 rounded-md bg-luoyi-cyan/20 text-luoyi-cyan border border-luoyi-cyan/30 text-xs font-bold uppercase">
+                    Commander Deep-Dive #2
+                </span>
+            </div>
+            <h2 class="font-heading text-5xl font-extrabold uppercase tracking-tight text-slate-100 mb-8">
+                Panduan Lengkap Strategi <span class="text-luoyi-cyan">Commander Luo Yi</span>
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Skill Breakdown (2 Columns) -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-panel rounded-2xl p-6 border-slate-800">
+                        <h3 class="text-xl font-bold mb-4 text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-atom text-luoyi-cyan"></i> Detail Mechanic Skill Luo Yi
+                        </h3>
+
+                        <!-- Tabs for Luo Yi Skills -->
+                        <div class="grid grid-cols-3 gap-2 mb-6 p-1 bg-slate-900 rounded-xl border border-slate-800">
+                            <button onclick="switchLuoYiSkillTab(1)" id="luoYiTab1" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all bg-luoyi-cyan text-black font-extrabold shadow">
+                                Skill 1: Dispersion
+                            </button>
+                            <button onclick="switchLuoYiSkillTab(2)" id="luoYiTab2" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200">
+                                Skill 2: Rotation Domain
+                            </button>
+                            <button onclick="switchLuoYiSkillTab(3)" id="luoYiTab3" class="py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200">
+                                Skill 3: Diversion Warp
+                            </button>
+                        </div>
+
+                        <!-- Skill Content Panels -->
+                        <div id="luoYiSkillContent1" class="space-y-4">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-cyan-400">Skill 1: Dispersion (Dual Yin-Yang Orb)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Magic Shield & Mark Reaction</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold rounded">Cooldown: Setiap Round</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Luo Yi menembakkan orb Yin dan Yang secara bergantian pada target musuh. Ketika dua hero musuh dengan tanda berlawanan saling mendekat, mereka tertarik satu sama lain, menerima magic damage dan stun 1 detik.
+                            </p>
+                        </div>
+
+                        <div id="luoYiSkillContent2" class="space-y-4 hidden">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-cyan-400">Skill 2: Rotation Domain (Aura Mana Regen)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Area Slow & Mana Acceleration</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 text-[10px] font-bold rounded">Cooldown: 2 Round</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Luo Yi menciptakan domain Yin-Yang di tengah papan catur. Hero rekan di area ini memulihkan +15 Mana per detik, sementara musuh terkena efek Slow 35%.
+                            </p>
+                        </div>
+
+                        <div id="luoYiSkillContent3" class="space-y-4 hidden">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-lg font-bold text-cyan-400">Skill 3: Diversion Warp (Portal Teleportasi Spatial)</h4>
+                                    <p class="text-xs text-slate-400">Tipe: Tactical Positioning Teleport</p>
+                                </div>
+                                <span class="px-2.5 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 text-[10px] font-bold rounded">Cooldown: 3 Round</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Luo Yi membuka portal Yin dan Yang di petak board. Unit yang ditaruh di portal Yin akan berteleportasi secara otomatis ke portal Yang di detik ke-1 pertempuran dengan bonus Shield +30% HP.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment & Positioning Sidebar -->
+                <div class="space-y-6">
+                    <div class="glass-panel rounded-2xl p-6 border-slate-800">
+                        <h3 class="text-xl font-bold mb-4 text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-hat-wizard text-luoyi-cyan"></i> Item Wajib Carry Magic
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg">
+                                    🔮
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-200">Holy Crystal</h4>
+                                    <p class="text-[11px] text-slate-400">+180 Magic Power (Damage Sihir Berlipat)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-400 font-bold text-lg">
+                                    ⚡
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-200">Enchanted Talisman</h4>
+                                    <p class="text-[11px] text-slate-400">+20% Mana Regen & Cooldown reduction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Chessboard & Synergy Simulator (8x4 Grid) -->
+    <section id="simulator" class="py-16 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="px-3 py-1 rounded-full bg-mc-gold/20 text-mc-gold border border-mc-gold/30 text-xs font-bold uppercase">
+                    Interactive Simulator
+                </span>
+                <h2 class="font-heading text-5xl font-extrabold uppercase tracking-tight text-slate-100 mt-2">
+                    Simulator Papan Catur 8x4 Magic Chess
+                </h2>
+                <p class="text-slate-400 text-sm mt-1">
+                    Pilih hero dari palet bawah lalu klik petak board. Uji simulasi **Shockwave Knockup Chou** atau **Teleportasi Spatial Luo Yi**!
+                </p>
+            </div>
+
+            <!-- Main Simulator Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Left Synergy Calculator Sidebar -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glass-panel rounded-2xl p-5 border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                                <i class="fa-solid fa-calculator text-mc-gold"></i> Sinergi Aktif
+                            </h3>
+                            <span id="heroCountBadge" class="px-2 py-0.5 rounded text-xs bg-slate-800 border border-slate-700 text-mc-gold font-bold">
+                                0 / 10 Hero
+                            </span>
+                        </div>
+
+                        <!-- Synergies Dynamic List -->
+                        <div id="synergyList" class="space-y-3 min-h-[160px]">
+                            <p class="text-xs text-slate-500 italic text-center py-8">
+                                Belum ada hero di papan catur.<br>Klik hero di bawah untuk dipasang.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Test Skill Action Triggers -->
+                    <div class="glass-panel rounded-2xl p-5 border-slate-800 space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            Simulasi Skill Commander di Board
+                        </h4>
+                        <button onclick="runChouKnockupSim()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:brightness-110 text-white font-bold text-xs uppercase tracking-wider shadow transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-hand-fist"></i> Shockwave Knockup Chou
+                        </button>
+                        <button onclick="runLuoYiTeleportSim()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-purple-600 hover:brightness-110 text-white font-bold text-xs uppercase tracking-wider shadow transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-shuffle"></i> Teleportasi Spatial Luo Yi
+                        </button>
+                        <button onclick="clearChessboard()" class="w-full py-2 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all border border-slate-700">
+                            <i class="fa-solid fa-trash-can mr-1"></i> Reset Board
+                        </button>
+                    </div>
+
+                    <!-- Presets -->
+                    <div class="glass-panel rounded-2xl p-4 border-slate-800">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Load Preset Composition</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="loadPreset('CADIA_WRESTLER')" class="py-1.5 px-2 bg-slate-900 hover:bg-slate-800 rounded border border-slate-700 text-[11px] font-semibold text-slate-300">
+                                Chou Cadia 6
+                            </button>
+                            <button onclick="loadPreset('LUOYI_MAGE')" class="py-1.5 px-2 bg-slate-900 hover:bg-slate-800 rounded border border-slate-700 text-[11px] font-semibold text-slate-300">
+                                Luo Yi Mage 6
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Board Grid & Hero Palette -->
+                <div class="lg:col-span-3 space-y-6">
+                    <div class="glass-panel rounded-2xl p-4 sm:p-6 border-slate-800 relative">
+                        <div class="flex items-center justify-between mb-3 text-xs text-slate-400">
+                            <span><i class="fa-solid fa-chess-board text-mc-gold mr-1"></i> Papan Catur 8 Kolom x 4 Baris</span>
+                            <span id="simulatorStatusText" class="text-cyan-400 font-medium">Klik hero di palet lalu klik petak board</span>
+                        </div>
+
+                        <!-- 8x4 Grid -->
+                        <div id="chessboardGrid" class="grid grid-cols-8 gap-1.5 sm:gap-2 bg-slate-950 p-3 rounded-xl border border-slate-800 aspect-[8/4.2]">
+                            <!-- Generated dynamically via JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Hero Palette -->
+                    <div class="glass-panel rounded-2xl p-5 border-slate-800">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-mc-gold mb-3 flex items-center justify-between">
+                            <span><i class="fa-solid fa-users text-mc-gold mr-1"></i> Palet Hero Roster Magic Chess</span>
+                            <span class="text-[10px] text-slate-400">Pilih Hero untuk dipasang</span>
+                        </h4>
+
+                        <div id="heroPalette" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2">
+                            <!-- Hero palette cards rendered via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Matchup Section -->
+    <section id="matchup" class="py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs font-bold uppercase">
+                    Head-to-Head Comparison
+                </span>
+                <h2 class="font-heading text-5xl font-extrabold uppercase tracking-tight text-slate-100 mt-2">
+                    Chou <span class="text-slate-500">VS</span> Luo Yi
+                </h2>
+                <p class="text-slate-400 text-sm">
+                    Perbandingan langsung karakteristik gaya bermain dan keunggulan taktis.
+                </p>
+            </div>
+
+            <!-- Comparison Table Panel -->
+            <div class="glass-panel rounded-2xl border-slate-800 overflow-hidden mb-8">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-900 border-b border-slate-800 text-xs font-bold uppercase tracking-wider">
+                                <th class="p-4 text-slate-400">Kategori Analisis</th>
+                                <th class="p-4 text-chou-primary"><i class="fa-solid fa-fist-raised mr-1"></i> Commander Chou</th>
+                                <th class="p-4 text-luoyi-cyan"><i class="fa-solid fa-yin-yang mr-1"></i> Commander Luo Yi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-200">Gaya Pertempuran</td>
+                                <td class="p-4">Aggressive Physical Burst & Frontline Knockup</td>
+                                <td class="p-4">Strategic Spatial Teleport & Area Magic Slow</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-200">Sinergi Utama</td>
+                                <td class="p-4"><span class="text-red-400 font-bold">Wrestler</span>, <span class="text-yellow-400 font-bold">Weapon Master</span>, Cadia</td>
+                                <td class="p-4"><span class="text-purple-400 font-bold">Mage</span>, <span class="text-cyan-400 font-bold">Elementalist</span>, Cadia</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-200">Tingkat Kesulitan Usage</td>
+                                <td class="p-4"><span class="text-emerald-400 font-bold">Sedang</span> (Ramah Pemula)</td>
+                                <td class="p-4"><span class="text-amber-400 font-bold">Tinggi</span> (Butuh Prediksi Posisi Target)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-800 bg-slate-950 text-slate-500 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-2 mb-3">
+                <div class="w-6 h-6 rounded bg-mc-gold text-black font-extrabold flex items-center justify-center font-heading">MC</div>
+                <span class="font-heading text-lg font-bold text-slate-300 tracking-wider">MAGIC CHESS GO GO STRATEGY PORTAL</span>
+            </div>
+            <p>© 2026 Strategy Guide & Interactive Simulator for Commander Chou & Luo Yi. Mobile Legends: Bang Bang Fan Project.</p>
+        </div>
+    </footer>
+
+    <script>
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) audioCtx = new AudioContextClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playPunchSound() {
+            if (!soundEnabled) return;
+            initAudioContext();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(240, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.18);
+            gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.18);
+        }
+
+        function playWarpSound() {
+            if (!soundEnabled) return;
+            initAudioContext();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(980, audioCtx.currentTime + 0.25);
+            osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.5);
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+        }
+
+        function playClickSound() {
+            if (!soundEnabled) return;
+            initAudioContext();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(850, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        document.getElementById('soundToggleBtn').addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const label = document.getElementById('soundLabel');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-mc-gold';
+                label.innerText = 'Audio SFX: ON';
+                playClickSound();
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+                label.innerText = 'Audio SFX: MUTE';
+            }
+        });
+
+        const chouCanvas = document.getElementById('chouCanvas');
+        const chouCtx = chouCanvas.getContext('2d');
+        const luoyiCanvas = document.getElementById('luoyiCanvas');
+        const luoyiCtx = luoyiCanvas.getContext('2d');
+
+        function resizeCanvases() {
+            if (chouCanvas && chouCanvas.parentElement) {
+                chouCanvas.width = chouCanvas.parentElement.clientWidth;
+                chouCanvas.height = chouCanvas.parentElement.clientHeight;
+            }
+            if (luoyiCanvas && luoyiCanvas.parentElement) {
+                luoyiCanvas.width = luoyiCanvas.parentElement.clientWidth;
+                luoyiCanvas.height = luoyiCanvas.parentElement.clientHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvases);
+
+        // Chou State
+        const chouState = {
+            auraActive: true,
+            action: 'IDLE',
+            actionTimer: 0,
+            particles: []
+        };
+
+        // Luo Yi State
+        const luoyiState = {
+            portalActive: true,
+            action: 'IDLE',
+            actionTimer: 0,
+            particles: []
+        };
+
+        function initParticles() {
+            // Chou Fire Particles
+            chouState.particles = [];
+            for (let i = 0; i < 40; i++) {
+                chouState.particles.push({
+                    x: Math.random() * 300,
+                    y: Math.random() * 250,
+                    size: Math.random() * 4 + 1.5,
+                    speedY: Math.random() * 2 + 0.8,
+                    alpha: Math.random(),
+                    color: Math.random() > 0.35 ? '#ef4444' : '#f59e0b'
+                });
+            }
+
+            // Luo Yi Cosmic Particles
+            luoyiState.particles = [];
+            for (let i = 0; i < 45; i++) {
+                luoyiState.particles.push({
+                    angle: Math.random() * Math.PI * 2,
+                    speed: Math.random() * 0.03 + 0.015,
+                    radius: Math.random() * 75 + 25,
+                    size: Math.random() * 3.5 + 1,
+                    color: Math.random() > 0.5 ? '#06b6d4' : '#a855f7'
+                });
+            }
+        }
+
+        // Render Original Chou (Kung-Fu Boy) Vector Character
+        function drawChouCharacter(ctx, x, y, time) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Breathing sine motion
+            const breath = Math.sin(time * 0.004) * 3;
+
+            // Fiery Martial Ground Aura Ring
+            if (chouState.auraActive) {
+                const auraGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, 80);
+                auraGlow.addColorStop(0, 'rgba(239, 68, 68, 0.45)');
+                auraGlow.addColorStop(0.7, 'rgba(245, 158, 11, 0.2)');
+                auraGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = auraGlow;
+                ctx.beginPath();
+                ctx.ellipse(0, 50, 80, 25, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Dragon Kick Action Spirit Wave
+            if (chouState.action === 'SKILL3') {
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.arc(0, -30, 70 + (25 - chouState.actionTimer) * 2, -Math.PI / 3, Math.PI / 3);
+                ctx.stroke();
+            }
+
+            ctx.translate(0, breath);
+
+            // Legs / Stance (Black Martial Pants & Gold Trim Boots)
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.moveTo(-22, 10);
+            ctx.lineTo(-32, 55);
+            ctx.lineTo(-15, 55);
+            ctx.lineTo(-10, 15);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(10, 15);
+            ctx.lineTo(15, 55);
+            ctx.lineTo(32, 55);
+            ctx.lineTo(22, 10);
+            ctx.fill();
+
+            // Boots Gold Accents
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillRect(-32, 48, 17, 7);
+            ctx.fillRect(15, 48, 17, 7);
+
+            // Red Belt Sash (Iconic MLBB Chou Sash)
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(-18, 5, 36, 9);
+            // Flowing sash ribbons
+            const ribbonSway = Math.sin(time * 0.006) * 8;
+            ctx.beginPath();
+            ctx.moveTo(10, 12);
+            ctx.quadraticCurveTo(22 + ribbonSway, 30, 26 + ribbonSway, 50);
+            ctx.lineTo(18 + ribbonSway, 50);
+            ctx.quadraticCurveTo(14 + ribbonSway, 30, 5, 12);
+            ctx.fill();
+
+            // Torso: Original Black Vestment with Gold Embroidered Borders
+            ctx.fillStyle = '#090d16';
+            ctx.fillRect(-18, -35, 36, 42);
+
+            // Gold Trim Borders on Vest
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3.5;
+            ctx.strokeRect(-18, -35, 36, 42);
+
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(-18, -35);
+            ctx.lineTo(0, -10);
+            ctx.lineTo(18, -35);
+            ctx.stroke();
+
+            // Head & Neck
+            ctx.fillStyle = '#f87171'; // Skin tone highlight
+            ctx.beginPath();
+            ctx.arc(0, -48, 16, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Black Spiky Hair (Chou Signature Hairstyle)
+            ctx.fillStyle = '#020617';
+            ctx.beginPath();
+            ctx.moveTo(-18, -48);
+            ctx.lineTo(-22, -62);
+            ctx.lineTo(-12, -58);
+            ctx.lineTo(-10, -68);
+            ctx.lineTo(-2, -60);
+            ctx.lineTo(4, -70);
+            ctx.lineTo(10, -58);
+            ctx.lineTo(20, -64);
+            ctx.lineTo(18, -48);
+            ctx.closePath();
+            ctx.fill();
+
+            // Red Headband accent
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(-16, -55, 32, 4);
+
+            // Arms & Red Hand Wraps / Fists
+            // Left Arm - Guard Stance
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(-28, -32, 10, 22);
+            // Red Hand Wrap Glove
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(-26, -10, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Right Arm - Extended Punch Stance
+            const punchOffset = chouState.action === 'SKILL1' ? (25 - chouState.actionTimer) * 1.5 : 0;
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(18 + punchOffset, -32, 12, 18);
+            // Red Hand Wrap Glove
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(28 + punchOffset, -22, 9, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Chou Animation Loop
+        function animateChou() {
+            if (!chouCtx) return;
+            const w = chouCanvas.width;
+            const h = chouCanvas.height;
+            const cx = w / 2;
+            const cy = h / 2 + 20;
+
+            chouCtx.clearRect(0, 0, w, h);
+
+            // Draw Background Flame Grid
+            chouCtx.strokeStyle = 'rgba(239, 68, 68, 0.08)';
+            chouCtx.lineWidth = 1;
+            for (let x = 0; x < w; x += 28) {
+                chouCtx.beginPath();
+                chouCtx.moveTo(x, 0);
+                chouCtx.lineTo(x, h);
+                chouCtx.stroke();
+            }
+
+            // Draw Flame Particles
+            if (chouState.auraActive) {
+                chouState.particles.forEach(p => {
+                    p.y -= p.speedY;
+                    if (p.y < 0) p.y = h;
+                    chouCtx.fillStyle = p.color;
+                    chouCtx.globalAlpha = p.alpha;
+                    chouCtx.beginPath();
+                    chouCtx.arc(p.x + cx - 150, p.y, p.size, 0, Math.PI * 2);
+                    chouCtx.fill();
+                });
+                chouCtx.globalAlpha = 1.0;
+            }
+
+            // Handle Action Timers
+            if (chouState.actionTimer > 0) {
+                chouState.actionTimer--;
+                if (chouState.actionTimer === 0) chouState.action = 'IDLE';
+            }
+
+            drawChouCharacter(chouCtx, cx, cy, Date.now());
+            requestAnimationFrame(animateChou);
+        }
+
+        // Render Original Luo Yi (Yin-Yang Geomancer) Vector Character
+        function drawLuoYiCharacter(ctx, x, y, time) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Levitation sine motion
+            const floatY = Math.sin(time * 0.003) * 12;
+            ctx.translate(0, floatY);
+
+            // Rotating Background Yin-Yang Portal Ring
+            if (luoyiState.portalActive) {
+                ctx.save();
+                ctx.translate(0, 20);
+                ctx.scale(1, 0.35);
+                ctx.rotate(time * 0.0015);
+
+                // Cyan Outer Array
+                ctx.strokeStyle = '#06b6d4';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(0, 0, 90, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Purple Inner Array
+                ctx.strokeStyle = '#a855f7';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(0, 0, 75, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Yin Yang Symbol
+                ctx.fillStyle = '#06b6d4';
+                ctx.beginPath();
+                ctx.arc(0, 0, 65, -Math.PI / 2, Math.PI / 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#3b0764';
+                ctx.beginPath();
+                ctx.arc(0, 0, 65, Math.PI / 2, -Math.PI / 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#06b6d4';
+                ctx.beginPath();
+                ctx.arc(0, 32.5, 32.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#3b0764';
+                ctx.beginPath();
+                ctx.arc(0, -32.5, 32.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Core dots
+                ctx.fillStyle = '#3b0764';
+                ctx.beginPath();
+                ctx.arc(0, 32.5, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#06b6d4';
+                ctx.beginPath();
+                ctx.arc(0, -32.5, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            // Luo Yi Floating Body Robes (Purple-White Oriental Design)
+            // Outer Flowing Sleeve Skirt
+            ctx.fillStyle = '#3b0764';
+            ctx.beginPath();
+            ctx.moveTo(-25, -20);
+            ctx.lineTo(25, -20);
+            ctx.lineTo(40, 50);
+            ctx.lineTo(-40, 50);
+            ctx.closePath();
+            ctx.fill();
+
+            // White Inner Robe Vest
+            ctx.fillStyle = '#f8fafc';
+            ctx.beginPath();
+            ctx.moveTo(-15, -25);
+            ctx.lineTo(15, -25);
+            ctx.lineTo(20, 35);
+            ctx.lineTo(-20, 35);
+            ctx.closePath();
+            ctx.fill();
+
+            // Cyan Rope Sash & Gold Yin-Yang Crest
+            ctx.fillStyle = '#06b6d4';
+            ctx.fillRect(-18, 0, 36, 6);
+
+            ctx.fillStyle = '#fbbf24';
+            ctx.beginPath();
+            ctx.arc(0, 3, 7, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Flowing Wide Oriental Sleeves
+            const sleeveSway = Math.sin(time * 0.005) * 6;
+            ctx.fillStyle = '#a855f7';
+            // Left Sleeve
+            ctx.beginPath();
+            ctx.moveTo(-18, -25);
+            ctx.lineTo(-45 - sleeveSway, 10);
+            ctx.lineTo(-25, 20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Right Sleeve holding Orb
+            ctx.beginPath();
+            ctx.moveTo(18, -25);
+            ctx.lineTo(45 + sleeveSway, 10);
+            ctx.lineTo(25, 20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Head & Mysterious Purple Face Veil
+            ctx.fillStyle = '#cbd5e1';
+            ctx.beginPath();
+            ctx.arc(0, -42, 14, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Purple Face Veil (Iconic MLBB Luo Yi Design)
+            ctx.fillStyle = '#581c87';
+            ctx.fillRect(-12, -42, 24, 14);
+
+            // Flowing Silver-Lavender Hair (3 Flowing Hair Locks)
+            const hairSway = Math.cos(time * 0.004) * 8;
+            ctx.fillStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.moveTo(-12, -45);
+            ctx.quadraticCurveTo(-28 + hairSway, -20, -32 + hairSway, 25);
+            ctx.lineTo(-18, -35);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(12, -45);
+            ctx.quadraticCurveTo(28 + hairSway, -20, 32 + hairSway, 25);
+            ctx.lineTo(18, -35);
+            ctx.closePath();
+            ctx.fill();
+
+            // Floating Glowing Yin-Yang Magic Orb in Hands
+            const orbPulse = Math.sin(time * 0.008) * 3;
+            const orbGlow = ctx.createRadialGradient(28, -20, 2, 28, -20, 18);
+            orbGlow.addColorStop(0, '#06b6d4');
+            orbGlow.addColorStop(0.6, '#a855f7');
+            orbGlow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = orbGlow;
+            ctx.beginPath();
+            ctx.arc(28, -20, 14 + orbPulse, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Luo Yi Animation Loop
+        function animateLuoYi() {
+            if (!luoyiCtx) return;
+            const w = luoyiCanvas.width;
+            const h = luoyiCanvas.height;
+            const cx = w / 2;
+            const cy = h / 2 - 10;
+
+            luoyiCtx.clearRect(0, 0, w, h);
+
+            // Draw Cosmic Galaxy Particles
+            luoyiState.particles.forEach(p => {
+                p.angle += p.speed;
+                const px = cx + Math.cos(p.angle) * p.radius;
+                const py = cy + Math.sin(p.angle) * (p.radius * 0.45);
+
+                luoyiCtx.fillStyle = p.color;
+                luoyiCtx.globalAlpha = 0.75;
+                luoyiCtx.beginPath();
+                luoyiCtx.arc(px, py, p.size, 0, Math.PI * 2);
+                luoyiCtx.fill();
+            });
+            luoyiCtx.globalAlpha = 1.0;
+
+            // Handle Action Timers
+            if (luoyiState.actionTimer > 0) {
+                luoyiState.actionTimer--;
+                if (luoyiState.actionTimer === 0) luoyiState.action = 'IDLE';
+            }
+
+            drawLuoYiCharacter(luoyiCtx, cx, cy, Date.now());
+            requestAnimationFrame(animateLuoYi);
+        }
+
+        // Interactive Skill Controls
+        function triggerChouSkill(type) {
+            playPunchSound();
+            chouState.action = type;
+            chouState.actionTimer = 25;
+            const badge = document.getElementById('chouStatusBadge');
+            if (badge) {
+                const names = { 'SKILL1': 'Jeet Kune Knockup!', 'SKILL2': 'Shunpo Dash Shield!', 'SKILL3': 'Way of Dragon Kick!' };
+                badge.innerText = `Skill: ${names[type]}`;
+                setTimeout(() => badge.innerText = 'Stance: Martial Guard', 1400);
+            }
+        }
+
+        function toggleChouAura() {
+            playClickSound();
+            chouState.auraActive = !chouState.auraActive;
+            const txt = document.getElementById('chouAuraText');
+            if (txt) txt.innerText = chouState.auraActive ? 'Aktif (Flame Energy)' : 'Non-Aktif';
+        }
+
+        function triggerLuoYiSkill(type) {
+            playWarpSound();
+            luoyiState.action = type;
+            luoyiState.actionTimer = 25;
+            const badge = document.getElementById('luoyiStatusBadge');
+            if (badge) {
+                const names = { 'SKILL1': 'Dispersion Orbs!', 'SKILL2': 'Rotation Mana Domain!', 'SKILL3': 'Diversion Spatial Teleport!' };
+                badge.innerText = `Skill: ${names[type]}`;
+                setTimeout(() => badge.innerText = 'Stance: Mystical Levitation', 1400);
+            }
+        }
+
+        function toggleLuoYiPortal() {
+            playClickSound();
+            luoyiState.portalActive = !luoyiState.portalActive;
+            const txt = document.getElementById('luoyiPortalText');
+            if (txt) txt.innerText = luoyiState.portalActive ? 'Berputar (Resonansi Kosmik)' : 'Redup';
+        }
+
+        // Tab Switching Logic
+        function switchChouSkillTab(tabIndex) {
+            playClickSound();
+            [1, 2, 3].forEach(i => {
+                const btn = document.getElementById(`chouTab${i}`);
+                const content = document.getElementById(`chouSkillContent${i}`);
+                if (i === tabIndex) {
+                    btn.className = "py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all bg-chou-primary text-white shadow";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200";
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function switchLuoYiSkillTab(tabIndex) {
+            playClickSound();
+            [1, 2, 3].forEach(i => {
+                const btn = document.getElementById(`luoYiTab${i}`);
+                const content = document.getElementById(`luoYiSkillContent${i}`);
+                if (i === tabIndex) {
+                    btn.className = "py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all bg-luoyi-cyan text-black font-extrabold shadow";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "py-2.5 px-3 rounded-lg text-xs font-bold uppercase transition-all text-slate-400 hover:text-slate-200";
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        const heroRoster = [
+            { id: 'chou', name: 'Chou', icon: '🥊', synergy: ['Cadia', 'Wrestler'], color: 'border-red-500 text-red-400' },
+            { id: 'luoyi', name: 'Luo Yi', icon: '☯️', synergy: ['Cadia', 'Mage'], color: 'border-cyan-500 text-cyan-400' },
+            { id: 'zilong', name: 'Zilong', icon: '🐉', synergy: ['Cadia', 'Weapon Master'], color: 'border-yellow-500 text-yellow-400' },
+            { id: 'ling', name: 'Ling', icon: '🗡️', synergy: ['Cadia', 'Assassin'], color: 'border-blue-400 text-blue-400' },
+            { id: 'esmeralda', name: 'Esmeralda', icon: '💃', synergy: ['Superhero', 'Mage'], color: 'border-purple-500 text-purple-400' },
+            { id: 'badang', name: 'Badang', icon: '👊', synergy: ['Superhero', 'Wrestler'], color: 'border-amber-600 text-amber-500' },
+            { id: 'valir', name: 'Valir', icon: '🔥', synergy: ['Elementalist', 'Mage'], color: 'border-orange-500 text-orange-400' },
+            { id: 'gord', name: 'Gord', icon: '⚡', synergy: ['Elementalist', 'Mage'], color: 'border-cyan-400 text-cyan-300' },
+            { id: 'martis', name: 'Martis', icon: '⚔', synergy: ['Weapon Master', 'Prince'], color: 'border-red-600 text-red-500' },
+            { id: 'dyrroth', name: 'Dyrroth', icon: '😈', synergy: ['Wrestler', 'Demon'], color: 'border-indigo-500 text-indigo-400' },
+            { id: 'wanwan', name: 'Wanwan', icon: '🏹', synergy: ['Cadia', 'Marksman'], color: 'border-emerald-400 text-emerald-400' },
+            { id: 'akai', name: 'Akai', icon: '🐼', synergy: ['Cadia', 'Guardian'], color: 'border-lime-500 text-lime-400' },
+            { id: 'gatot', name: 'Gatotkaca', icon: '🛡️', synergy: ['Superhero', 'Guardian'], color: 'border-amber-400 text-amber-300' },
+            { id: 'thamuz', name: 'Thamuz', icon: '🔥', synergy: ['Wrestler', 'Demon'], color: 'border-rose-600 text-rose-500' }
+        ];
+
+        let boardState = new Array(32).fill(null);
+        let selectedHeroToPlace = null;
+
+        function renderHeroPalette() {
+            const paletteEl = document.getElementById('heroPalette');
+            if (!paletteEl) return;
+            paletteEl.innerHTML = '';
+
+            heroRoster.forEach(hero => {
+                const card = document.createElement('button');
+                const isSelected = selectedHeroToPlace && selectedHeroToPlace.id === hero.id;
+                card.className = `p-2 rounded-xl bg-slate-900 border ${hero.color} hover:brightness-125 transition-all text-center flex flex-col items-center justify-center gap-1 ${isSelected ? 'ring-2 ring-mc-gold scale-105' : ''}`;
+                card.onclick = () => selectHeroFromPalette(hero);
+
+                card.innerHTML = `
+                    <span class="text-xl">${hero.icon}</span>
+                    <span class="text-[11px] font-bold truncate w-full text-slate-200">${hero.name}</span>
+                    <span class="text-[9px] text-slate-400 truncate w-full">${hero.synergy.join('/')}</span>
+                `;
+                paletteEl.appendChild(card);
+            });
+        }
+
+        function selectHeroFromPalette(hero) {
+            playClickSound();
+            selectedHeroToPlace = hero;
+            const statusTxt = document.getElementById('simulatorStatusText');
+            if (statusTxt) statusTxt.innerText = `Hero [${hero.name}] dipilih! Klik petak kosong board.`;
+            renderHeroPalette();
+        }
+
+        function renderChessboard() {
+            const gridEl = document.getElementById('chessboardGrid');
+            if (!gridEl) return;
+            gridEl.innerHTML = '';
+
+            for (let i = 0; i < 32; i++) {
+                const cell = document.createElement('div');
+                const hero = boardState[i];
+
+                cell.className = `relative rounded-lg border border-slate-800/80 flex flex-col items-center justify-center p-1 cursor-pointer transition-all hover:border-mc-gold/60 ${hero ? 'bg-slate-900/90 shadow-md' : 'bg-slate-950/60 hover:bg-slate-900/40'}`;
+                cell.onclick = () => handleCellClick(i);
+
+                if (hero) {
+                    cell.innerHTML = `
+                        <button onclick="event.stopPropagation(); removeHeroFromBoard(${i});" class="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full text-[9px] font-bold text-white flex items-center justify-center hover:bg-red-700">✕</button>
+                        <span class="text-lg sm:text-2xl">${hero.icon}</span>
+                        <span class="text-[9px] font-extrabold text-slate-200 truncate w-full text-center">${hero.name}</span>
+                    `;
+                } else {
+                    cell.innerHTML = `<span class="text-[9px] text-slate-700 font-bold">${i + 1}</span>`;
+                }
+
+                gridEl.appendChild(cell);
+            }
+
+            calculateSynergies();
+        }
+
+        function handleCellClick(index) {
+            playClickSound();
+            if (selectedHeroToPlace) {
+                boardState[index] = { ...selectedHeroToPlace };
+                renderChessboard();
+            }
+        }
+
+        function removeHeroFromBoard(index) {
+            playClickSound();
+            boardState[index] = null;
+            renderChessboard();
+        }
+
+        function clearChessboard() {
+            playClickSound();
+            boardState = new Array(32).fill(null);
+            renderChessboard();
+        }
+
+        function calculateSynergies() {
+            const counts = {};
+            let totalHeroes = 0;
+
+            boardState.forEach(hero => {
+                if (hero) {
+                    totalHeroes++;
+                    hero.synergy.forEach(syn => counts[syn] = (counts[syn] || 0) + 1);
+                }
+            });
+
+            const badge = document.getElementById('heroCountBadge');
+            if (badge) badge.innerText = `${totalHeroes} / 10 Hero`;
+
+            const synList = document.getElementById('synergyList');
+            if (!synList) return;
+
+            if (Object.keys(counts).length === 0) {
+                synList.innerHTML = `<p class="text-xs text-slate-500 italic text-center py-8">Belum ada hero di papan catur.<br>Klik hero di bawah untuk dipasang.</p>`;
+                return;
+            }
+
+            synList.innerHTML = '';
+            Object.entries(counts).forEach(([synName, count]) => {
+                const item = document.createElement('div');
+                item.className = 'p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between text-xs';
+                item.innerHTML = `
+                    <span class="font-bold text-slate-200">${synName}</span>
+                    <span class="px-2 py-0.5 rounded font-extrabold bg-mc-gold/20 text-mc-gold border border-mc-gold/30">[${count}] Aktif</span>
+                `;
+                synList.appendChild(item);
+            });
+        }
+
+        function runChouKnockupSim() {
+            playPunchSound();
+            const filledIndices = boardState.map((val, idx) => val ? idx : null).filter(val => val !== null);
+            if (filledIndices.length < 1) return;
+
+            const gridCells = document.getElementById('chessboardGrid').children;
+            filledIndices.forEach(idx => {
+                if (gridCells[idx]) {
+                    gridCells[idx].classList.add('ring-4', 'ring-red-500', '-translate-y-2');
+                    setTimeout(() => gridCells[idx].classList.remove('ring-4', 'ring-red-500', '-translate-y-2'), 650);
+                }
+            });
+
+            const statusTxt = document.getElementById('simulatorStatusText');
+            if (statusTxt) statusTxt.innerText = `💥 Shockwave Martial Energy Chou memicu Airborne Knockup pada seluruh hero!`;
+        }
+
+        function runLuoYiTeleportSim() {
+            playWarpSound();
+            const filledIndices = boardState.map((val, idx) => val ? idx : null).filter(val => val !== null);
+            if (filledIndices.length < 1) return;
+
+            const fromIdx = filledIndices[0];
+            let toIdx = Math.floor(Math.random() * 32);
+            while (toIdx === fromIdx) toIdx = Math.floor(Math.random() * 32);
+
+            const gridCells = document.getElementById('chessboardGrid').children;
+            if (gridCells[fromIdx]) gridCells[fromIdx].classList.add('ring-4', 'ring-cyan-400', 'scale-110');
+
+            setTimeout(() => {
+                const temp = boardState[fromIdx];
+                boardState[fromIdx] = null;
+                boardState[toIdx] = temp;
+                renderChessboard();
+
+                const statusTxt = document.getElementById('simulatorStatusText');
+                if (statusTxt) statusTxt.innerText = `✨ Teleportasi Spatial Luo Yi Berhasil! ${temp.name} berpindah posisi!`;
+            }, 500);
+        }
+
+        function loadPreset(type) {
+            playClickSound();
+            boardState = new Array(32).fill(null);
+            if (type === 'CADIA_WRESTLER') {
+                boardState[0] = heroRoster.find(h => h.id === 'chou');
+                boardState[1] = heroRoster.find(h => h.id === 'zilong');
+                boardState[2] = heroRoster.find(h => h.id === 'ling');
+                boardState[3] = heroRoster.find(h => h.id === 'badang');
+                boardState[4] = heroRoster.find(h => h.id === 'akai');
+            } else if (type === 'LUOYI_MAGE') {
+                boardState[0] = heroRoster.find(h => h.id === 'luoyi');
+                boardState[1] = heroRoster.find(h => h.id === 'esmeralda');
+                boardState[2] = heroRoster.find(h => h.id === 'valir');
+                boardState[3] = heroRoster.find(h => h.id === 'gord');
+                boardState[4] = heroRoster.find(h => h.id === 'gatot');
+            }
+            renderChessboard();
+        }
+
+        window.onload = function () {
+            resizeCanvases();
+            initParticles();
+            animateChou();
+            animateLuoYi();
+            renderHeroPalette();
+            renderChessboard();
+        };
+    </script>
+</body>
+</html>
