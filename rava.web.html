@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rava Ardiansyah - Panduan & Keutamaan Beribadah dalam Islam</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b',
+                            900: '#022c22',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .font-arabic { font-family: 'Amiri', serif; }
+        .bg-pattern {
+            background-image: radial-gradient(rgba(217, 119, 6, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .dark .bg-pattern {
+            background-image: radial-gradient(rgba(251, 191, 36, 0.08) 1px, transparent 0);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans transition-colors duration-300 min-h-screen flex flex-col antialiased bg-pattern">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-emerald-900/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-emerald-700/50 dark:border-slate-800 text-white transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-gold-500 to-amber-300 flex items-center justify-center text-emerald-950 font-bold text-2xl shadow-lg shadow-gold-500/20">
+                        <i class="fa-solid font-arabic">☪</i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-gold-400 to-amber-100 bg-clip-text text-transparent">Rava Ardiansyah</span>
+                        <span class="block text-xs text-emerald-200/80 font-medium tracking-widest">PANDUAN IBADAH ISLAM</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 font-medium text-sm">
+                    <button onclick="scrollToSection('hero')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Beranda</button>
+                    <button onclick="filterCategory('sholat')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Sholat</button>
+                    <button onclick="filterCategory('mengaji')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Mengaji</button>
+                    <button onclick="filterCategory('sedekah')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Sedekah</button>
+                    <button onclick="filterCategory('puasa')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Puasa</button>
+                    <button onclick="filterCategory('zikir')" class="px-3 py-2 rounded-lg hover:text-gold-400 hover:bg-emerald-800/50 transition">Zikir & Doa</button>
+                    <button onclick="scrollToSection('quiz')" class="px-3 py-2 rounded-lg text-gold-400 font-semibold bg-gold-500/10 hover:bg-gold-500/20 border border-gold-500/30 transition">Quiz (10 Soal)</button>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggle" onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-emerald-800/60 dark:bg-slate-800 text-gold-400 hover:text-gold-300 transition" title="Ganti Mode Tampilan">
+                        <i class="fa-solid fa-moon text-lg" id="themeIcon"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden p-2.5 rounded-lg bg-emerald-800/60 text-emerald-100 hover:text-white">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-emerald-950 dark:bg-slate-900 border-b border-emerald-800 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="scrollToSection('hero'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Beranda</button>
+            <button onclick="filterCategory('sholat'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Sholat</button>
+            <button onclick="filterCategory('mengaji'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Mengaji</button>
+            <button onclick="filterCategory('sedekah'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Sedekah & Zakat</button>
+            <button onclick="filterCategory('puasa'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Puasa</button>
+            <button onclick="filterCategory('zikir'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-slate-200 hover:bg-emerald-800">Zikir & Doa</button>
+            <button onclick="scrollToSection('quiz'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-gold-400 font-semibold bg-gold-500/10">Quiz (10 Soal)</button>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section id="hero" class="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-850 to-slate-900 text-white py-16 lg:py-24">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-7 space-y-6 text-center md:text-left">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-gold-500/20 text-gold-300 border border-gold-500/30">
+                        <i class="fa-solid fa-star text-gold-400"></i> Panduan Lengkap & Sahih
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
+                        Sempurnakan <span class="bg-gradient-to-r from-amber-300 via-gold-400 to-yellow-200 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(245,158,11,0.5)]">IBADAHMU</span>, Dekatkan Diri Kepada Allah SWT
+                    </h1>
+                    <p class="text-emerald-100/90 text-base sm:text-lg max-w-2xl font-normal leading-relaxed">
+                        Pelajari tata cara beribadah yang benar sesuai Sunnah, ketahui keutamaannya, serta pahami hukum dan bahaya meninggalkannya.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-2">
+                        <button onclick="scrollToSection('ibadah-section')" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-emerald-950 font-bold shadow-lg shadow-gold-500/25 transition transform active:scale-95 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> Mulai Belajar Ibadah
+                        </button>
+                        <button onclick="scrollToSection('quiz')" class="px-6 py-3.5 rounded-xl bg-emerald-800/60 hover:bg-emerald-800 text-white border border-emerald-600/50 font-semibold transition flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap text-gold-400"></i> Ikuti Kuis (10 Soal)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prayer Time Widget Card -->
+                <div class="md:col-span-5">
+                    <div class="bg-emerald-950/80 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl p-6 border border-gold-500/30 shadow-2xl relative overflow-hidden">
+                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-gold-500/10 rounded-full blur-2xl"></div>
+                        <div class="flex justify-between items-center pb-4 border-b border-emerald-800 dark:border-slate-800">
+                            <div>
+                                <h3 class="font-bold text-lg text-gold-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-clock"></i> Waktu Sholat Hari Ini
+                                </h3>
+                                <p class="text-xs text-emerald-200/70" id="currentDateStr">Memuat tanggal...</p>
+                            </div>
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-800 text-emerald-200 font-mono" id="locationLabel">DKI Jakarta</span>
+                        </div>
+
+                        <!-- Countdown -->
+                        <div class="my-4 text-center py-3 bg-emerald-900/50 dark:bg-slate-800/50 rounded-xl border border-emerald-700/30">
+                            <span class="text-xs text-emerald-300 block uppercase tracking-wider font-semibold">Menuju Waktu <span id="nextPrayerName" class="text-gold-400">Subuh</span></span>
+                            <div class="text-3xl font-mono font-extrabold text-white mt-1" id="prayerCountdown">00:00:00</div>
+                        </div>
+
+                        <!-- Schedule List -->
+                        <div class="grid grid-cols-5 gap-1 text-center text-xs mt-2" id="prayerTimesGrid">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <!-- Search and Filter Bar -->
+        <section class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-200/80 dark:border-slate-800 transition">
+            <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                <!-- Search Box -->
+                <div class="relative w-full lg:w-96">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari ibadah, dalil, hukum, atau doa..." 
+                        class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-gold-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 text-sm">
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 w-full lg:w-auto justify-start lg:justify-end overflow-x-auto pb-1" id="categoryFilters">
+                    <button onclick="filterCategory('all')" class="cat-btn active-cat px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-emerald-800 text-white">
+                        <i class="fa-solid fa-cubes"></i> Semua
+                    </button>
+                    <button onclick="filterCategory('sholat')" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-person-praying"></i> Sholat
+                    </button>
+                    <button onclick="filterCategory('mengaji')" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-book-quran"></i> Mengaji
+                    </button>
+                    <button onclick="filterCategory('sedekah')" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-hand-holding-heart"></i> Sedekah
+                    </button>
+                    <button onclick="filterCategory('puasa')" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-moon"></i> Puasa
+                    </button>
+                    <button onclick="filterCategory('zikir')" class="cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-hands-praying"></i> Zikir & Doa
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Dalil Card Generator -->
+        <section id="dalil-today" class="bg-gradient-to-r from-emerald-900 to-emerald-800 dark:from-slate-900 dark:to-slate-800 rounded-3xl p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden border border-gold-500/20">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-8 -translate-y-8">
+                <i class="fa-solid fa-book-quran text-9xl text-gold-400"></i>
+            </div>
+            <div class="relative z-10 max-w-4xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="px-3 py-1 rounded-md bg-gold-500/20 text-gold-300 border border-gold-500/30 text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-quote-left mr-1"></i> Kartu Dalil Hari Ini
+                    </span>
+                    <button onclick="generateRandomDalil()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition flex items-center gap-1">
+                        <i class="fa-solid fa-rotate"></i> Acak Dalil
+                    </button>
+                </div>
+
+                <div id="dalilCardContent" class="space-y-4 py-2">
+                    <p id="dalilArabic" class="font-arabic text-2xl sm:text-3xl lg:text-4xl leading-loose text-right text-gold-200">
+                        وَأَقِيمُوا۟ ٱلصَّلَوٰةَ وَءَاتُوا۟ ٱلزَّكَوٰةَ وَٱرْكَعُوا۟ مَعَ ٱلرَّٰكِعِينَ
+                    </p>
+                    <p id="dalilTranslation" class="text-sm sm:text-base italic text-emerald-100/90 leading-relaxed">
+                        "Dan laksanakanlah sholat, tunaikanlah zakat, dan rukuklah bersama orang-orang yang rukuk."
+                    </p>
+                    <div class="flex justify-between items-center text-xs text-gold-400 font-semibold pt-2 border-t border-emerald-700/50 dark:border-slate-700">
+                        <span id="dalilSource"><i class="fa-solid fa-book-open mr-1"></i> QS. Al-Baqarah: 43</span>
+                        <button onclick="copyDalilText()" class="hover:text-amber-200 transition flex items-center gap-1">
+                            <i class="fa-solid fa-copy"></i> <span id="copyBtnText">Salin Teks</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Worship Category Display -->
+        <section id="ibadah-section" class="space-y-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Panduan & Keutamaan Ibadah</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Pelajari pengertian, tata cara, keutamaan, serta hukum meninggalkannya.</p>
+                </div>
+            </div>
+
+            <!-- Card Grid -->
+            <div id="worshipGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards render dynamically via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200 dark:border-slate-800 transition">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
+                        <i class="fa-solid fa-graduation-cap mr-1"></i> Uji Pemahaman lengkap (10 Soal)
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Kuis Pemahaman Ibadah Islam</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">Uji seberapa jauh pemahaman Anda tentang hukum, keutamaan, dan tata cara beribadah.</p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer" class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 space-y-6">
+                    <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+                        <span id="quizProgress">Pertanyaan 1 dari 10</span>
+                        <span id="quizScore" class="text-emerald-600 dark:text-emerald-400">Skor: 0</span>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                        <div id="quizProgressBar" class="bg-gradient-to-r from-emerald-600 to-gold-500 h-full w-[10%] transition-all duration-300"></div>
+                    </div>
+
+                    <h3 id="quizQuestion" class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug">
+                        Loading pertanyaan...
+                    </h3>
+
+                    <div id="quizOptions" class="space-y-3">
+                        <!-- Options injected JS -->
+                    </div>
+
+                    <div id="quizExplanation" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200">
+                        <!-- Explanation injected JS -->
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button id="quizNextBtn" onclick="nextQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-emerald-800 text-white font-semibold text-sm hover:bg-emerald-700 transition">
+                            Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-800 transform transition-all my-8">
+            <div id="modalContent">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl border border-gold-500/40 text-sm font-medium flex items-center gap-2 transform transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-gold-400"></i>
+        <span id="toastMsg">Notifikasi</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-950 dark:bg-slate-950 text-slate-300 border-t border-emerald-900 dark:border-slate-800 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-500 to-amber-300 flex items-center justify-center text-emerald-950 font-bold text-xl">
+                            <i class="fa-solid font-arabic">☪</i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-amber-200 to-gold-400 bg-clip-text text-transparent">NurIbadah</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
+                        Platform media informasi interaktif mengenai panduan beribadah lengkap sesuai Al-Qur'an dan Sunnah Rasulullah SAW.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gold-400 uppercase tracking-wider mb-3">Navigasi Ibadah</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-400">
+                        <li><a href="javascript:void(0)" onclick="filterCategory('sholat')" class="hover:text-gold-300 transition">Sholat Fardhu & Sunnah</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterCategory('mengaji')" class="hover:text-gold-300 transition">Keutamaan Al-Qur'an</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterCategory('sedekah')" class="hover:text-gold-300 transition">Zakat & Sedekah</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterCategory('puasa')" class="hover:text-gold-300 transition">Puasa Ramadhan & Sunnah</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gold-400 uppercase tracking-wider mb-3">Catatan Penting</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Pengambilan hukum & dalil bersumber dari Al-Qur'anul Karim serta Kitab Hadits Shohih (Bukhari, Muslim, Abu Daud, Tirmidzi).
+                    </p>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-emerald-900/60 dark:border-slate-800 text-center text-xs text-slate-500">
+                <p>&copy; 2026 NurIbadah. Dibuat untuk tujuan edukasi & syiar Islam.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Items
+        const worshipData = [
+            {
+                id: 'sholat-fardhu',
+                category: 'sholat',
+                title: 'Sholat 5 Waktu (Fardhu)',
+                subtitle: 'Tiang Agama Islam',
+                summary: 'Sholat adalah ibadah paling utama yang wajib dilaksanakan oleh setiap Muslim yang mukallaf dalam keadaan apa pun.',
+                arabic: 'إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا',
+                latin: 'Innas-shalata kanat \'alal-mu\'minina kitabam mauquta',
+                translation: 'Sungguh, sholat itu adalah kewajiban yang ditentukan waktunya atas orang-orang yang beriman. (QS. An-Nisa: 103)',
+                keutamaan: [
+                    'Amalan pertama yang dihisab pada hari kiamat.',
+                    'Pencegah dari perbuatan keji dan mungkar.',
+                    'Pembersih dosa-dosa kecil di antara waktu sholat.'
+                ],
+                tataCara: [
+                    'Niat ikhlas karena Allah SWT & Berdiri bagi yang mampu.',
+                    'Takbiratul Ihram lalu membaca Doa Iftitah & Surat Al-Fatihah.',
+                    'Rukuk dengan tumakninah, lalu I\'tidal.',
+                    'Sujud dua kali dengan tumakninah selang duduk di antara dua sujud.',
+                    'Tasyahud Akhir dan Mengucapkan Salam ke kanan & kiri.'
+                ],
+                hukumMeninggalkan: 'Hukum sholat fardhu adalah Fardhu \'Ain. Meninggalkannya secara sengaja merupakan dosa besar yang sangat fatal. Rasulullah SAW bersabda: "Batas antara seseorang dengan kekafiran dan kesyirikan adalah meninggalkan sholat." (HR. Muslim).'
+            },
+            {
+                id: 'mengaji-quran',
+                category: 'mengaji',
+                title: 'Membaca & Tadabbur Al-Qur\'an',
+                subtitle: 'Petunjuk & Obat Bagi Hati',
+                summary: 'Membaca Al-Qur\'an merupakan ibadah mulia di mana setiap satu huruf yang dibaca bernilai sepuluh kebaikan.',
+                arabic: 'خيركم من تعلم القرآن وعلمه',
+                latin: 'Khairukum man ta\'allamal-Qur\'ana wa \'allamah',
+                translation: 'Sebaik-baik kalian adalah orang yang mempelajari Al-Qur\'an dan mengajarkannya. (HR. Bukhari)',
+                keutamaan: [
+                    'Memberikan syafa\'at bagi pembacanya di hari kiamat.',
+                    'Mendapatkan 10 kebaikan dari setiap satu huruf yang dibaca.',
+                    'Menenteramkan hati dan membawa keberkahan di dalam rumah.'
+                ],
+                tataCara: [
+                    'Suci dari hadats kecil dan besar (berwudhu).',
+                    'Menghadap kiblat dengan berpakaian bersih dan sopan.',
+                    'Membaca Ta\'awwuz dan Basmalah sebelum membaca ayat.',
+                    'Membaca dengan tartil (jelas dan perlahan sesuai tajwid).'
+                ],
+                hukumMeninggalkan: 'Berpaling dari Al-Qur\'an dan enggan memepelajarinya dapat menyebabkan hati menjadi keras dan gelap. Allah berfirman: "Dan barangsiapa berpaling dari peringatan-Ku, maka sungguh, dia akan menjalani kehidupan yang sempit..." (QS. Thaha: 124).'
+            },
+            {
+                id: 'sedekah-zakat',
+                category: 'sedekah',
+                title: 'Sedekah & Zakat Wajib',
+                subtitle: 'Pembersih Harta & Penolak Bala',
+                summary: 'Mengeluarkannya tidak mengurangi harta, melainkan menyucikannya dan melipatgandakan pahala di sisi Allah.',
+                arabic: 'مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ',
+                latin: 'Ma naqashat shadaqatun min malin',
+                translation: 'Sedekah itu tidak akan mengurangi harta. (HR. Muslim)',
+                keutamaan: [
+                    'Menghapus dosa sebagaimana air memadamkan api.',
+                    'Mendapat naungan di hari kiamat.',
+                    'Melipatgandakan rezeki dan membuka pintu keberkahan.'
+                ],
+                tataCara: [
+                    'Meniatkan ikhlas semata-mata karena Allah SWT tanpa riya.',
+                    'Prioritaskan kerabat dekat yang membutuhkan, lalu fakir miskin.',
+                    'Memberikan harta yang terbaik, bukan barang sisa yang tidak terpakai.'
+                ],
+                hukumMeninggalkan: 'Menahan Zakat Wajib adalah dosa besar. Harta yang tidak dikeluarkan zakatnya akan diwujudkan sebagai ular berbisa/logam panas yang menyiksa pemiliknya kelak di akhirat (QS. At-Taubah: 34-35).'
+            },
+            {
+                id: 'puasa-ramadhan',
+                category: 'puasa',
+                title: 'Puasa Ramadhan & Sunnah',
+                subtitle: 'Benteng Diri dari Hawa Nafsu',
+                summary: 'Menahan diri dari makan, minum, dan hal yang membatalkan mulai dari terbit fajar hingga terbenam matahari.',
+                arabic: 'مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ',
+                latin: 'Man shama Ramadhana imanan wahtisaban ghufira lahu ma taqaddama min dzambih',
+                translation: 'Barangsiapa berpuasa Ramadhan karena iman dan mengharap pahala, diampuni dosa-dosanya yang telah lalu. (HR. Bukhari & Muslim)',
+                keutamaan: [
+                    'Pahala puasa langsung dibalas oleh Allah SWT tanpa batas.',
+                    'Bau mulut orang berpuasa lebih harum di sisi Allah dari minyak kasturi.',
+                    'Disediakan pintu khusus di surga yang bernama Ar-Rayyan.'
+                ],
+                tataCara: [
+                    'Berniat di dalam hati pada malam hari (untuk puasa wajib).',
+                    'Makan sahur karena di dalamnya terdapat keberkahan.',
+                    'Menjaga lisan dan anggota tubuh dari maksiat.',
+                    'Segera berbuka puasa ketika waktu maghrib tiba.'
+                ],
+                hukumMeninggalkan: 'Sengaja membatalkan atau tidak berpuasa Ramadhan tanpa udzur syar\'i (seperti sakit/safar) adalah dosa besar yang sangat parah dan tidak bisa digantikan sempurna walau berpuasa setahun penuh.'
+            },
+            {
+                id: 'zikir-doa',
+                category: 'zikir',
+                title: 'Zikir & Doa Harian',
+                subtitle: 'Ketenangan Hati & Hubungan Langsung',
+                summary: 'Mengingat Allah SWT melalui kalimat-kalimat thoyyibah serta memohon kebaikan dunia dan akhirat.',
+                arabic: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ',
+                latin: 'Ala bidzikrillahi tathma\'innul-qulub',
+                translation: 'Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram. (QS. Ar-Ra\'d: 28)',
+                keutamaan: [
+                    'Sebab Allah ingat dan memperhatikan hamba-Nya.',
+                    'Merupakan amalan yang paling ringan di lisan namun berat di timbangan.',
+                    'Pelindung dari marabahaya dan gangguan setan.'
+                ],
+                tataCara: [
+                    'Menghayati arti dan makna bacaan zikir.',
+                    'Merendahkan suara dan penuh rasa khusyuk.',
+                    'Rutin membaca Zikir Pagi dan Petang.'
+                ],
+                hukumMeninggalkan: 'Orang yang tidak pernah berdoa kepada Allah dianggap sebagai orang yang sombong. Rasulullah SAW bersabda: "Barangsiapa yang tidak meminta kepada Allah, maka Allah akan murka kepadanya." (HR. Tirmidzi).'
+            }
+        ];
+
+        // Random Dalil Generator Data
+        const dalilList = [
+            {
+                arabic: "وَأَقِيمُوا۟ ٱلصَّلَوٰةَ وَءَاتُوا۟ ٱلزَّكَوٰةَ وَٱرْكَعُوا۟ مَعَ ٱلرَّٰكِعِينَ",
+                translation: "Dan laksanakanlah sholat, tunaikanlah zakat, dan rukuklah bersama orang-orang yang rukuk.",
+                source: "QS. Al-Baqarah: 43"
+            },
+            {
+                arabic: "يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
+                translation: "Wahai orang-orang yang beriman! Diwajibkan atas kamu berpuasa sebagaimana diwajibkan atas orang sebelum kamu agar kamu bertakwa.",
+                source: "QS. Al-Baqarah: 183"
+            },
+            {
+                arabic: "إِنَّمَا يَعْمُرُ مَسَٰجِدَ ٱللَّهِ مَنْ ءَامَنَ بِٱللَّهِ وَٱلْيَوْمِ ٱلْءَاخِرِ",
+                translation: "Hanya yang memakmurkan masjid-masjid Allah ialah orang-orang yang beriman kepada Allah dan Hari kemudian.",
+                source: "QS. At-Taubah: 18"
+            },
+            {
+                arabic: "فَٱذْكُرُونِىٓ أَذْكُرْكُمْ وَٱشْكُرُوا۟ لِى وَلَا تَكْفُرُونِ",
+                translation: "Maka ingatlah kepada-Ku, Aku pun akan ingat kepadamu. Bersyukurlah kepada-Ku, dan janganlah kamu ingkar kepada-Ku.",
+                source: "QS. Al-Baqarah: 152"
+            },
+            {
+                arabic: "مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا",
+                translation: "Siapa yang membaca satu huruf dari Al-Qur'an maka baginya satu kebaikan dengan sepuluh kali lipatnya.",
+                source: "HR. Tirmidzi"
+            }
+        ];
+
+        // Expanded 10 Quiz Questions Data
+        const quizData = [
+            {
+                question: "1. Apakah hukum melaksanakan Sholat Fardhu lima waktu bagi setiap muslim yang sudah baligh dan berakal (mukallaf)?",
+                options: ["Sunnah Muakkad", "Fardhu Kifayah", "Fardhu 'Ain", "Mubah"],
+                correct: 2,
+                explanation: "Sholat lima waktu hukumnya Fardhu 'Ain, artinya wajib bagi setiap individu Muslim tanpa terkecuali selama akalnya masih ada."
+            },
+            {
+                question: "2. Surah apakah dalam Al-Qur'an yang rukun dan wajib dibaca pada setiap rakaat sholat?",
+                options: ["Surah Al-Ikhlas", "Surah Al-Fatihah", "Surah An-Nas", "Surah Al-Baqarah"],
+                correct: 1,
+                explanation: "Rasulullah SAW bersabda: 'Tidak sah sholat bagi orang yang tidak membaca Fatihatul Kitab (Surah Al-Fatihah).' (HR. Bukhari & Muslim)."
+            },
+            {
+                question: "3. Berapa pahala kebaikan (khasanah) yang dijanjikan Allah untuk setiap satu huruf Al-Qur'an yang dibaca?",
+                options: ["1 Kebaikan", "5 Kebaikan", "10 Kebaikan", "70 Kebaikan"],
+                correct: 2,
+                explanation: "Dalam HR. Tirmidzi disebutkan bahwa siapa yang membaca satu huruf Al-Qur'an akan mendapat 1 kebaikan yang dilipatgandakan menjadi 10 kebaikan."
+            },
+            {
+                question: "4. Berapakah jumlah golongan (Asnaf) penerima zakat yang disebutkan dalam Surah At-Taubah ayat 60?",
+                options: ["5 Golongan", "7 Golongan", "8 Golongan", "10 Golongan"],
+                correct: 2,
+                explanation: "Surah At-Taubah ayat 60 menetapkan 8 golongan penerima zakat: fakir, miskin, amil, mualaf, riqab (hamba sahaya), gharim (orang berutang), fisabilillah, dan ibnu sabil."
+            },
+            {
+                question: "5. Puasa apakah yang hukumnya wajib dilaksanakan oleh seluruh umat Islam selama satu bulan penuh?",
+                options: ["Puasa Senin-Kamis", "Puasa Arafah", "Puasa Syawal", "Puasa Ramadhan"],
+                correct: 3,
+                explanation: "Puasa Ramadhan adalah salah satu Rukun Islam yang wajib dilaksanakan satu bulan penuh berdasarkan firman Allah dalam QS. Al-Baqarah: 183."
+            },
+            {
+                question: "6. Bagaimana hukum dan konsekuensi bagi seseorang yang sengaja meninggalkan sholat fardhu tanpa udzur syar'i?",
+                options: ["Dosa kecil yang mudah diampuni", "Dosa besar yang sangat fatal dan diancam ancaman berat", "Tidak berdosa jika diganti besok", "Hanya bernilai makruh"],
+                correct: 1,
+                explanation: "Meninggalkan sholat fardhu secara sengaja adalah dosa besar utama. Rasulullah SAW bersabda: 'Batas antara seseorang dengan kekafiran/kesyirikan adalah meninggalkan sholat.' (HR. Muslim)."
+            },
+            {
+                question: "7. Manakah di antara amalan berikut yang pahalanya TIDAK terputus meskipun seseorang telah meninggal dunia?",
+                options: ["Sholat malam & Puasa sunnah", "Sedekah Jariyah, Ilmu Bermanfaat, & Doa Anak Sholeh", "Membeli rumah megah untuk keluarga", "Haji dan Umrah berulang kali"],
+                correct: 1,
+                explanation: "Sesuai hadits riwayat Muslim: 'Jika manusia meninggal dunia, terputuslah amalnya kecuali 3 hal: sedekah jariyah, ilmu yang dimanfaatkan, atau anak sholeh yang mendoakannya.'"
+            },
+            {
+                question: "8. Kapan waktu paling utama untuk melaksanakan Sholat Sunnah Tahajud?",
+                options: ["Awal malam setelah sholat Isya", "Tepat saat terbenam matahari", "Sepertiga malam terakhir setelah bangun tidur", "Saat masuk waktu sepertiga siang"],
+                correct: 2,
+                explanation: "Sholat Tahajud paling utama dikerjakan pada sepertiga malam terakhir setelah bangun dari tidur, karena pada waktu itu Allah SWT mengabulkan doa hamba-Nya."
+            },
+            {
+                question: "9. Dalam Rukun Islam, sholat menempati posisi rukun ke berapa dan diibaratkan sebagai apa?",
+                options: ["Rukun ke-1, diibaratkan sebagai benteng", "Rukun ke-2, diibaratkan sebagai Tiang Agama (Imaduddeen)", "Rukun ke-3, diibaratkan sebagai hiasan", "Rukun ke-5, diibaratkan sebagai mahkota"],
+                correct: 1,
+                explanation: "Sholat adalah Rukun Islam ke-2 dan diibaratkan sebagai tiang agama. Rasulullah SAW bersabda: 'Sholat adalah tiang agama, barangsiapa menegakkannya maka ia menegakkan agama.' (HR. Baihaqi)."
+            },
+            {
+                question: "10. Kalimat zikir apakah yang dipuji Rasulullah SAW sebagai 'ringan di lisan namun sangat berat di timbangan mizan'?",
+                options: ["Subhanallah walhamdulillah wala ilaha illallah wallahu akbar", "Subhanallah wa bihamdihi Subhanallahil 'Azhim", "La haula wala quwwata illa billah", "Astaghfirullahal 'Azhim"],
+                correct: 1,
+                explanation: "Rasulullah SAW bersabda: 'Dua kalimat yang ringan di lisan, berat di timbangan, dan dicintai Ar-Rahman adalah Subhanallah wa bihamdihi Subhanallahil \'Azhim.' (HR. Bukhari & Muslim)."
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        // Render Worship Cards
+        function renderWorshipCards(data) {
+            const container = document.getElementById('worshipGrid');
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-400 mb-2"></i>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Tidak ada topik atau dalil yang cocok dengan pencarian Anda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md hover:shadow-xl border border-slate-200/80 dark:border-slate-800 transition flex flex-col justify-between group";
+                
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wider">
+                                ${item.category}
+                            </span>
+                            <i class="fa-solid fa-star text-gold-400 opacity-0 group-hover:opacity-100 transition"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-gold-400 transition">
+                                ${item.title}
+                            </h3>
+                            <p class="text-xs font-semibold text-gold-600 dark:text-gold-400 mt-0.5">${item.subtitle}</p>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                            ${item.summary}
+                        </p>
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <p class="font-arabic text-right text-lg text-emerald-900 dark:text-gold-200 line-clamp-1">${item.arabic}</p>
+                            <p class="text-xs italic text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">"${item.translation}"</p>
+                        </div>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-slate-100 dark:border-slate-800/80">
+                        <button onclick="openDetailModal('${item.id}')" class="w-full py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2">
+                            <span>Pelajari Selengkapnya & Dalil</span>
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Search Handler
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = worshipData.filter(item => {
+                const matchesFilter = currentFilter === 'all' || item.category === currentFilter;
+                const matchesSearch = item.title.toLowerCase().includes(query) ||
+                                      item.summary.toLowerCase().includes(query) ||
+                                      item.translation.toLowerCase().includes(query) ||
+                                      item.hukumMeninggalkan.toLowerCase().includes(query);
+                return matchesFilter && matchesSearch;
+            });
+            renderWorshipCards(filtered);
+        }
+
+        // Filter Category
+        function filterCategory(cat) {
+            currentFilter = cat;
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-800', 'text-white');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+
+            event?.currentTarget?.classList?.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            event?.currentTarget?.classList?.add('bg-emerald-800', 'text-white');
+
+            handleSearch();
+            scrollToSection('ibadah-section');
+        }
+
+        // Open Detail Modal
+        function openDetailModal(id) {
+            const item = worshipData.find(x => x.id === id);
+            if (!item) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="p-6 sm:p-8 space-y-6 relative">
+                    <button onclick="closeModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-gold-400 bg-emerald-100 dark:bg-emerald-950 px-3 py-1 rounded-full">
+                            ${item.category}
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-2">${item.title}</h2>
+                        <p class="text-sm font-semibold text-gold-600 dark:text-gold-400">${item.subtitle}</p>
+                    </div>
+
+                    <!-- Main Explanation -->
+                    <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${item.summary}</p>
+
+                    <!-- Arabic Verse & Translation Box -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-950 to-emerald-900 text-white space-y-3 shadow-inner">
+                        <p class="font-arabic text-2xl sm:text-3xl text-right leading-loose text-gold-300">${item.arabic}</p>
+                        <p class="text-xs text-emerald-200/90 italic">${item.latin}</p>
+                        <p class="text-sm text-emerald-100 border-t border-emerald-800 pt-2">"${item.translation}"</p>
+                    </div>
+
+                    <!-- Keutamaan List -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-award text-gold-500"></i> Keutamaan
+                        </h4>
+                        <ul class="space-y-1.5 pl-5 list-disc text-sm text-slate-600 dark:text-slate-300">
+                            ${item.keutamaan.map(k => `<li>${k}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Tata Cara -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-emerald-600"></i> Tata Cara & Adab
+                        </h4>
+                        <ol class="space-y-1.5 pl-5 list-decimal text-sm text-slate-600 dark:text-slate-300">
+                            ${item.tataCara.map(t => `<li>${t}</li>`).join('')}
+                        </ol>
+                    </div>
+
+                    <!-- Hukum & Bahaya Meninggalkan -->
+                    <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 space-y-1">
+                        <h4 class="font-bold text-rose-800 dark:text-rose-300 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Hukum & Bahaya Meninggalkan
+                        </h4>
+                        <p class="text-xs text-rose-700 dark:text-rose-200 leading-relaxed">${item.hukumMeninggalkan}</p>
+                    </div>
+
+                    <div class="pt-4 flex justify-end">
+                        <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 text-slate-800 dark:text-slate-200 font-semibold text-xs transition">
+                            Tutup Modal
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        // Random Dalil Generator
+        function generateRandomDalil() {
+            const randomIndex = Math.floor(Math.random() * dalilList.length);
+            const item = dalilList[randomIndex];
+            
+            document.getElementById('dalilArabic').innerText = item.arabic;
+            document.getElementById('dalilTranslation').innerText = `"${item.translation}"`;
+            document.getElementById('dalilSource').innerHTML = `<i class="fa-solid fa-book-open mr-1"></i> ${item.source}`;
+        }
+
+        function copyDalilText() {
+            const ar = document.getElementById('dalilArabic').innerText;
+            const tr = document.getElementById('dalilTranslation').innerText;
+            const src = document.getElementById('dalilSource').innerText;
+            
+            const textToCopy = `${ar}\n\n${tr}\n(${src})`;
+            
+            // execCommand copy fallback for iframe compatibility
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast("Dalil berhasil disalin!");
+        }
+
+        // Toast Handler
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function loadQuizQuestion() {
+            const item = quizData[currentQuizIndex];
+            document.getElementById('quizProgress').innerText = `Pertanyaan ${currentQuizIndex + 1} dari ${quizData.length}`;
+            document.getElementById('quizQuestion').innerText = item.question;
+            
+            // Update progress bar percentage
+            const percentage = ((currentQuizIndex + 1) / quizData.length) * 100;
+            const progressBar = document.getElementById('quizProgressBar');
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
+            }
+
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            document.getElementById('quizExplanation').classList.add('hidden');
+            document.getElementById('quizNextBtn').classList.add('hidden');
+
+            item.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-emerald-600 transition text-sm font-medium text-slate-800 dark:text-slate-200 flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                btn.onclick = () => selectQuizOption(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(selectedIdx, btnElement) {
+            const item = quizData[currentQuizIndex];
+            const allOptionBtns = document.getElementById('quizOptions').children;
+
+            // Disable all option buttons
+            for (let btn of allOptionBtns) {
+                btn.disabled = true;
+                btn.classList.add('opacity-70');
+            }
+
+            if (selectedIdx === item.correct) {
+                quizScore += 10; // 10 points per question (Total 100)
+                document.getElementById('quizScore').innerText = `Skor: ${quizScore}`;
+                btnElement.classList.remove('bg-white', 'dark:bg-slate-900', 'opacity-70');
+                btnElement.classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-600', 'text-emerald-900', 'dark:text-emerald-200');
+            } else {
+                btnElement.classList.remove('bg-white', 'dark:bg-slate-900', 'opacity-70');
+                btnElement.classList.add('bg-rose-100', 'dark:bg-rose-950', 'border-rose-600', 'text-rose-900', 'dark:text-rose-200');
+                
+                // Highlight correct answer
+                allOptionBtns[item.correct].classList.remove('opacity-70');
+                allOptionBtns[item.correct].classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-600');
+            }
+
+            const expBox = document.getElementById('quizExplanation');
+            expBox.innerHTML = `<strong>Pembahasan:</strong> ${item.explanation}`;
+            expBox.classList.remove('hidden');
+
+            document.getElementById('quizNextBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                loadQuizQuestion();
+            } else {
+                // Quiz Complete Screen
+                const quizContainer = document.getElementById('quizContainer');
+                let predikat = "MasyaAllah! Anda Sangat Memahami Ibadah Islam.";
+                if (quizScore < 60) predikat = "Terus tingkatkan semangat belajar dan ilmu agama Anda!";
+                else if (quizScore < 80) predikat = "Alhamdulillah! Pemahaman Anda sudah sangat baik.";
+
+                quizContainer.innerHTML = `
+                    <div class="text-center py-8 space-y-4">
+                        <div class="w-20 h-20 rounded-full bg-gold-500/20 text-gold-500 mx-auto flex items-center justify-center text-4xl font-bold shadow-inner">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white">Kuis Selesai!</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">${predikat}</p>
+                        <div class="py-2">
+                            <span class="text-xs text-slate-400 block uppercase font-semibold">Total Skor Akhir</span>
+                            <span class="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400">${quizScore} / 100</span>
+                        </div>
+                        <div class="pt-2">
+                            <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-emerald-800 text-white text-xs sm:text-sm font-bold hover:bg-emerald-700 transition shadow-lg flex items-center gap-2 mx-auto">
+                                <i class="fa-solid fa-rotate-right"></i> Ulangi Kuis 10 Soal
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quizContainer').innerHTML = `
+                <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+                    <span id="quizProgress">Pertanyaan 1 dari 10</span>
+                    <span id="quizScore" class="text-emerald-600 dark:text-emerald-400">Skor: 0</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                    <div id="quizProgressBar" class="bg-gradient-to-r from-emerald-600 to-gold-500 h-full w-[10%] transition-all duration-300"></div>
+                </div>
+                <h3 id="quizQuestion" class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug"></h3>
+                <div id="quizOptions" class="space-y-3"></div>
+                <div id="quizExplanation" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200"></div>
+                <div class="flex justify-end pt-2">
+                    <button id="quizNextBtn" onclick="nextQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-emerald-800 text-white font-semibold text-sm hover:bg-emerald-700 transition">
+                        Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            `;
+            loadQuizQuestion();
+        }
+
+        const mockPrayerTimes = {
+            Subuh: "04:35",
+            Dzuhur: "11:58",
+            Ashar: "15:15",
+            Maghrib: "18:02",
+            Isya: "19:12"
+        };
+
+        function setupPrayerTimes() {
+            const grid = document.getElementById('prayerTimesGrid');
+            grid.innerHTML = '';
+
+            Object.entries(mockPrayerTimes).forEach(([name, time]) => {
+                const item = document.createElement('div');
+                item.className = "p-2 bg-emerald-900/40 dark:bg-slate-800/80 rounded-lg border border-emerald-700/30";
+                item.innerHTML = `
+                    <span class="block text-[10px] text-emerald-200/70 uppercase">${name}</span>
+                    <span class="font-bold text-xs text-white">${time}</span>
+                `;
+                grid.appendChild(item);
+            });
+
+            // Set current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDateStr').innerText = new Date().toLocaleDateString('id-ID', options);
+
+            // Simple timer countdown simulation
+            let seconds = 3600 * 2 + 15 * 60 + 40;
+            setInterval(() => {
+                seconds--;
+                if (seconds <= 0) seconds = 3600 * 5;
+                const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                const secs = String(seconds % 60).padStart(2, '0');
+                document.getElementById('prayerCountdown').innerText = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // Theme Toggle Handler
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = "fa-solid fa-moon text-lg";
+            } else {
+                html.classList.add('dark');
+                icon.className = "fa-solid fa-sun text-lg";
+            }
+        }
+
+        // Smooth Scroll Helper
+        function scrollToSection(id) {
+            const sec = document.getElementById(id);
+            if (sec) {
+                sec.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+        // On Load Initialization
+        window.onload = function() {
+            renderWorshipCards(worshipData);
+            setupPrayerTimes();
+            loadQuizQuestion();
+        };
+    </script>
+</body>
+</html>
